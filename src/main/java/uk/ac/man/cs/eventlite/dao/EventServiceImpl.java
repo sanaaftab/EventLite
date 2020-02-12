@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,12 @@ public class EventServiceImpl implements EventService {
 	private final static Logger log = LoggerFactory.getLogger(EventServiceImpl.class);
 
 	private final static String DATA = "data/events.json";
+	
+	@Autowired
+	private EventRepository eventRepository;
 
 	@Override
-	public long count() {
+	public long count() {/*
 		long count = 0;
 		Iterator<Event> i = findAll().iterator();
 
@@ -31,11 +35,12 @@ public class EventServiceImpl implements EventService {
 			i.next();
 		}
 
-		return count;
+		return count; */
+		return eventRepository.count();
 	}
 
 	@Override
-	public Iterable<Event> findAll() {
+	public Iterable<Event> findAll() {/*
 		ArrayList<Event> events = new ArrayList<Event>();
 
 		try {
@@ -50,6 +55,12 @@ public class EventServiceImpl implements EventService {
 			// If we can't read the file, then the event list is empty...
 		}
 
-		return events;
+		return events;*/
+		return eventRepository.findAll();
+	}
+	
+	@Override
+	public Event save(Event event) {
+		return eventRepository.save(event);
 	}
 }
