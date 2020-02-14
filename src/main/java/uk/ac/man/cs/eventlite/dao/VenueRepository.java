@@ -1,12 +1,9 @@
 package uk.ac.man.cs.eventlite.dao;
+import org.springframework.data.repository.CrudRepository;
 
 import uk.ac.man.cs.eventlite.entities.Venue;
 
-public interface VenueService {
-
+public interface VenueRepository extends CrudRepository<Venue, Long>{
 	public long count();
-	
-	public Venue save(Venue venue);
-
 	public Iterable<Venue> findAll();
 }
