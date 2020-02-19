@@ -22,10 +22,15 @@ public class EventServiceImpl implements EventService {
 	private final static Logger log = LoggerFactory.getLogger(EventServiceImpl.class);
 
 	private final static String DATA = "data/events.json";
+<<<<<<< HEAD
 	
 	@Autowired
 	private EventRepository eventRepository;
+=======
+    
+>>>>>>> refs/remotes/origin/persisting-venues
 
+	
 	@Override
 	public long count() {
 		return eventRepository.count();

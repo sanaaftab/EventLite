@@ -15,7 +15,7 @@ import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.dao.EventRepository;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
-
+import uk.ac.man.cs.eventlite.entities.Venue;;
 @Component
 @Profile({ "default", "test" })
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -33,7 +33,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
 		if (eventService.count() > 0) {
 			log.info("Database already populated. Skipping data initialization.");
-			return;
+			
 		}
 
 		// Build and save initial models here.
@@ -46,6 +46,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event1.setVenue(1);
 		eventService.save(event1);
 //
+		Venue venue1 = new Venue();
+		//venue1.setId(50);
+		venue1.setCapacity(1000);
+		venue1.setName("Gangabangul lui Rares");
+		venueService.save(venue1);
 //	
 
 	}
