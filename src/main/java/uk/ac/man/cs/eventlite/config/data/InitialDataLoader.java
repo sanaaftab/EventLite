@@ -45,13 +45,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event1.setName("Event 1");
 		event1.setVenue(1);
 		eventService.save(event1);
-//
-		Venue venue1 = new Venue();
-		//venue1.setId(50);
-		venue1.setCapacity(1000);
-		venue1.setName("Gangabangul lui Rares");
-		venueService.save(venue1);
-//	
+
 
 	}
 }
