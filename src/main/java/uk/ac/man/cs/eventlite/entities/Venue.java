@@ -1,9 +1,14 @@
 package uk.ac.man.cs.eventlite.entities;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 
@@ -14,10 +19,18 @@ public class Venue{
 	@GeneratedValue
 	private long id;
 
+	@Autowired
 	private String name;
-
+     
+	@Autowired
 	private int capacity;
-
+    
+	
+	@Autowired
+	@OneToMany(mappedBy = "venue")
+	private Set<Event> events;
+	
+	
 	public Venue() {
 	}
 

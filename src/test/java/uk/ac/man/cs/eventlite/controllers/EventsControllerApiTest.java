@@ -77,8 +77,8 @@ public class EventsControllerApiTest {
 
 	@Test
 	public void getIndexWithEvents() throws Exception {
-		Venue v = new Venue();
 		Event e = new Event();
+		Venue v = new Venue();
 		e.setId(0);
 		e.setName("Event");
 		e.setDate(LocalDate.now());

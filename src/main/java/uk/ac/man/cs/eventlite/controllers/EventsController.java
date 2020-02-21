@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
-//import uk.ac.man.cs.eventlite.dao.VenueService;
+import uk.ac.man.cs.eventlite.dao.VenueService;
 
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
@@ -18,7 +18,7 @@ public class EventsController {
 	private EventService eventService;
 
 	@Autowired
-	//private VenueService venueService;
+	private VenueService venueService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAllEvents(Model model) {

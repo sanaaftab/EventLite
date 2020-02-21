@@ -79,9 +79,7 @@ public class EventsControllerTest {
 				.andExpect(view().name("events/index")).andExpect(handler().methodName("getAllEvents"));
 
 		verify(eventService).findAll();
-		verify(venueService).findAll();
 		verifyZeroInteractions(event);
-		verifyZeroInteractions(venue);
 	}
 
 	@Test
@@ -93,8 +91,6 @@ public class EventsControllerTest {
 				.andExpect(view().name("events/index")).andExpect(handler().methodName("getAllEvents"));
 
 		verify(eventService).findAll();
-		verify(venueService).findAll();
 		verifyZeroInteractions(event);
-		verifyZeroInteractions(venue);
 	}
 }
