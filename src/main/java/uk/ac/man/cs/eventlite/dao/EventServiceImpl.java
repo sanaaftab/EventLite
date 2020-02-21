@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +35,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public Iterable<Event> findAll() {
+		//needs changes
 		return eventRepository.findAll();
 	}
 	

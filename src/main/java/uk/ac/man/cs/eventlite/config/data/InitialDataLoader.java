@@ -42,12 +42,21 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		venue1.setName("Gangabangul lui Rares");
 		venueService.save(venue1);
 		
+		
+		
 		Event event1 = new Event();
 		event1.setDate(LocalDate.of(2020, 02, 25));
 		event1.setTime(LocalTime.of(18, 00));
 		event1.setName("Event 1");
-		event1.setVenue(1);
+		event1.setVenue(venue1);
 		eventService.save(event1);
+		
+		Event event2 = new Event();
+		event2.setDate(LocalDate.of(2021, 02, 25));
+		event2.setTime(LocalTime.of(19, 00));
+		event2.setName("Event 2");
+		event2.setVenue(venue1);
+		eventService.save(event2);
 
 
 	}
