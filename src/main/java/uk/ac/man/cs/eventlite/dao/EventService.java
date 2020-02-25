@@ -8,5 +8,5 @@ public interface EventService {
 
 	public Iterable<Event> findAll();
 	
-	public Event save(Event event);
+	public void save(Event event);
 }

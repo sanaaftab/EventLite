@@ -1,12 +1,16 @@
 package uk.ac.man.cs.eventlite.dao;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 
 import uk.ac.man.cs.eventlite.entities.Event;
 
-@Service
+@Repository
+@Transactional
 public class EventServiceImpl implements EventService {
 
 	//private final static Logger log = LoggerFactory.getLogger(EventServiceImpl.class);
@@ -30,7 +34,7 @@ public class EventServiceImpl implements EventService {
 	
 	
 	@Override
-	public Event save(Event event) {
-		return eventRepository.save(event);
+	public void save(Event event) {
+		eventRepository.save(event);
 	}
 }

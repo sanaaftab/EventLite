@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>New</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>Add a new event</h1>
+    
+    <form  th:action="@{/events}" th:object="${events}" method="post">
+    
+      
+        <label for="name"><b>Event Name</b></label>
+	    <input type="text" placeholder="Enter Event Name" path="name" id="name" required>
+	
+	    <label for="venue"><b>Venue</b></label>
+	    <select>
+		    <option th:each="e : ${events}" th:text="${e.venue.name}">Venue</option>
+		</select>
+
+		<label for="date"><b>Date:</b></label>
+		<input type="date" value="2020-02-01" path="date" id="date" required>
+		
+		<label for="time"><b>Time:</b></label>
+		<input type="time" value="12:00" path="time" id="time" required>
+		
+      
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
+      <a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
+      
+    </form>
+  </div>
+</body>
+</html>
