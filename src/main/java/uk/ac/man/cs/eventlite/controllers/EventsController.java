@@ -38,6 +38,12 @@ public class EventsController {
 
 		return "events/index";
 	}
+	/*@RequestMapping(path = "/events", method = RequestMethod.GET)
+	public String searchEventsByName(Model model) {
+		
+		
+		return "events/search-results";
+	}*/
 
 	@ModelAttribute
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
