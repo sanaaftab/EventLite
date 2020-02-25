@@ -8,22 +8,22 @@
   <div layout:fragment="content">
     <h1>Add a new event</h1>
     
-    <form  th:action="@{/events}" th:object="${events}" method="post">
+    <form  th:action="@{/events}" th:object="${eventssssssss}" method="post">
     
       
-        <label for="name"><b>Event Name</b></label>
-	    <input type="text" placeholder="Enter Event Name" path="name" id="name" required>
+        <label><b>Event Name</b></label>
+	    <input type="text" placeholder="Enter Event Name" name="name" required>
 	
-	    <label for="venue"><b>Venue</b></label>
-	    <select>
-		    <option th:each="e : ${events}" th:text="${e.venue.name}">Venue</option>
-		</select>
+	    <label><b>Venue</b></label>
+	    <select name="venue" >
+		    <option th:each="v : ${venues}" th:value="${v.id}" th:text="${v.name}">Venue</option>
+		</select> 
 
-		<label for="date"><b>Date:</b></label>
-		<input type="date" value="2020-02-01" path="date" id="date" required>
+		<label><b>Date:</b></label>
+		<input type="date" value="2020-02-01"  name="date" required>
 		
-		<label for="time"><b>Time:</b></label>
-		<input type="time" value="12:00" path="time" id="time" required>
+		<label><b>Time:</b></label>
+		<input type="time" value="12:00" name="time"  required>
 		
       
       <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>

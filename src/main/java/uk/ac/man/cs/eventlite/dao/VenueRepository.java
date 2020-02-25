@@ -5,4 +5,6 @@ import uk.ac.man.cs.eventlite.entities.Venue;
 
 public interface VenueRepository extends JpaRepository<Venue, Long>{
 	
+	//Venue findById(long id);
+	
 }

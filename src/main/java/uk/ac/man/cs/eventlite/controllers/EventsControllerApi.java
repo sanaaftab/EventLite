@@ -40,24 +40,6 @@ public class EventsControllerApi {
 		return eventToResource(eventService.findAll());
 	}
 	
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public ResponseEntity<?> newEvent() {
-		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
-	}
-	
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createEvent(@RequestBody @Valid Event event, BindingResult result) {
-
-		if (result.hasErrors()) {
-			return ResponseEntity.unprocessableEntity().build();
-		}
-
-		eventService.save(event);
-		URI location = linkTo(EventsControllerApi.class).slash(event.getId()).toUri();
-
-		return ResponseEntity.created(location).build();
-	}
-	
 	private Resource<Event> eventToResource(Event event) {
 		Link selfLink = linkTo(EventsControllerApi.class).slash(event.getId()).withSelfRel();
 

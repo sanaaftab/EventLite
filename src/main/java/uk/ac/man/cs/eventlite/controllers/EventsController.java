@@ -19,14 +19,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.dao.EventService;
+import uk.ac.man.cs.eventlite.dao.VenueService;
 
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
-@SessionAttributes("events")
 public class EventsController {
 
 	@Autowired
 	private EventService eventService;
+	
+	@Autowired
+	private VenueService venueService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAllEvents(Model model) {
@@ -41,26 +44,23 @@ public class EventsController {
 	public String newEvent(Model model) {
 		if (!model.containsAttribute("events")) {
 			model.addAttribute("events", new Event());
+			model.addAttribute("venues", venueService.findAll());
 		}
 
 		return "events/new";
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public String createEvent(@RequestBody @Valid @ModelAttribute("events") Event events,
+	public String createEvent(@RequestBody @Valid @ModelAttribute Event event,
 			BindingResult errors, Model model, RedirectAttributes redirectAttrs) {
-		System.out.println(errors);
+		
 		if (errors.hasErrors()) {
-			model.addAttribute("events", events);
-			return "events/index";
+			model.addAttribute("events", event);
+
+			return "events/new";
 		}
 		
-		
-//		model.addAttribute("name", events.getName());
-//        model.addAttribute("venue", events.getVenue());
-//        model.addAttribute("date", events.getDate());
-//        model.addAttribute("time", events.getTime());
-		eventService.save(events);
+		eventService.save(event);
 		redirectAttrs.addFlashAttribute("ok_message", "New event added.");
 
 		return "redirect:/events";
@@ -68,7 +68,7 @@ public class EventsController {
 	
 //	 @PostMapping("/events")
 //	  public String eventSubmit(@ModelAttribute Event events) {
-//	    return "result";
+//	    return "events";
 //	  }
 
 }
