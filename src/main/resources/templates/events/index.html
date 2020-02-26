@@ -20,11 +20,17 @@
       </thead>
       <tbody>
         <tr th:each="e : ${events}">
+		<form th:action="@{/events/{num}(num=${e.id})}" th:method="delete">
+		  <input type="hidden" name="_method" value="delete">
           <td th:text="${e.name}">My Event</td>
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
+         <input type="hidden" name="_method" value="delete" />
+        <td> <button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete</a></td>
+        </form>
         </tr>
+         
       </tbody>
     </table>
 
