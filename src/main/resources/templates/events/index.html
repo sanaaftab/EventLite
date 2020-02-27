@@ -37,9 +37,9 @@
     -->
     
     
-    <form action="search-results" method="post">
+    <form action="#" th:action="@{/events}" th:object="${searchquery}" method="get">
     <label><b>Search for events:</b></label>
-	<input type="text" placeholder="Search.." name="search" required>
+	<input type="text" th:field="*{searchString}" placeholder="Search.." name="search" required>
     <button type="submit"><i class="fa fa-search"></i></button>
     </form>
 

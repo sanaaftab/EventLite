@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
-
+import uk.ac.man.cs.eventlite.search.SearchQuery;
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
 public class EventsController {
@@ -32,18 +32,20 @@ public class EventsController {
 	private VenueService venueService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getAllEvents(Model model) {
+	public String getAllEvents(Model model, @ModelAttribute SearchQuery searchQuery) {
 
-		model.addAttribute("events", eventService.findAll());
+		model.addAttribute("searchquery", new SearchQuery());
 
+		Iterable<Event> eventList;
+		if(searchQuery.getSearchString()==null || searchQuery.getSearchString().isEmpty() )
+			eventList = eventService.findAll();
+		else
+			eventList = eventService.findAllByName(searchQuery.getSearchString());
+		
+		model.addAttribute("events", eventList);
 		return "events/index";
+		
 	}
-	/*@RequestMapping(path = "/events", method = RequestMethod.GET)
-	public String searchEventsByName(Model model) {
-		
-		
-		return "events/search-results";
-	}*/
 
 	@ModelAttribute
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
