@@ -34,7 +34,7 @@ public class EventsController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAllEvents(Model model, @ModelAttribute SearchQuery searchQuery) {
 
-		model.addAttribute("searchquery", new SearchQuery());
+		model.addAttribute("searchqueryKey", new SearchQuery());
 
 		Iterable<Event> eventList;
 		if(searchQuery.getSearchString()==null || searchQuery.getSearchString().isEmpty() )
