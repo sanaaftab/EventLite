@@ -31,6 +31,17 @@
     <p>
       <a class="btn btn-primary" role="button" href="/events/new"><i class="fas fa-plus" aria-hidden="true"></i> Add a new event</a>
     </p>
+    
+    <!--
+    <form  th:action="@{/search-results}" th:object="${event}" method="get"> 
+    -->
+    
+    
+    <form action="#" th:action="@{/events}" th:object="${searchqueryKey}" method="get">
+    <label><b>Search for events:</b></label>
+	<input type="text" th:field="*{searchString}" placeholder="Search.." name="search" required>
+    <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
 
   </div>
 

@@ -15,4 +15,6 @@ public interface EventService {
 	public Optional<Event> findById(long id);
 	
 	public void save(Event event);
+	
+    public Iterable<Event> findAllByName(String searchString);
 }

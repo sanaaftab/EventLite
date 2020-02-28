@@ -5,5 +5,5 @@ import uk.ac.man.cs.eventlite.entities.Event;
 
 public interface EventRepository extends JpaRepository<Event, Long>{
 
-	
+	public Iterable<Event> findAllByNameContainingIgnoreCaseOrderByDateAscTimeAsc(String searchQuery);
 }

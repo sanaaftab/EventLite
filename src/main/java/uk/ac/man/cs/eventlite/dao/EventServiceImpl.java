@@ -49,4 +49,9 @@ public class EventServiceImpl implements EventService {
 	public void save(Event event) {
 		 eventRepository.save(event);
 	}
+	
+	@Override
+	public Iterable<Event> findAllByName(String searchString){
+		return eventRepository.findAllByNameContainingIgnoreCaseOrderByDateAscTimeAsc(searchString);
+	}
 }

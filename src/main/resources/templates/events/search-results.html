@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>Search Results</title>
+</head>
+
+<body>
+  <div layout:fragment="content">
+    <h1>Search Results:</h1>
+    
+    <form  th:action="@{/events}" th:object="${event}" method="get">
+    
+      <tbody>
+        <tr th:each="e: ${events}">
+          <td <label><b>Event Name</b></label> th:text="${e.name}"/>
+          <td <label><b>Venue</b></label> th:text="${e.venue.name}"/>
+          <td <label><b>Date</b></label> th:text="${e.date}"/>
+		  <td <label><b>Time</b></label> th:text="${e.time}"/>	
+	    </tr>
+	  </tbody>	
+      <a class="btn btn-primary" role="button" href="/events"><i class="fas fa-bookmark" aria-hidden="true"></i> Return to events </a>
+      
+    </form>
+  </div>
+</body>
+
+</html>
