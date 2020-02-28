@@ -1,11 +1,12 @@
 package uk.ac.man.cs.eventlite.dao;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
 
 import uk.ac.man.cs.eventlite.entities.Event;
 
@@ -32,9 +33,20 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.findAll(sort);
 	}
 	
+	@Override
+	public Optional<Event> findById(long id) {
+		return eventRepository.findById(id);
+	}
+
 	
 	@Override
-	public Event save(Event event) {
-		return eventRepository.save(event);
+	public Event findOne(long id) {
+		return findById(id).orElse(null);
+	}
+	
+	
+	@Override
+	public void save(Event event) {
+		 eventRepository.save(event);
 	}
 }

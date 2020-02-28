@@ -50,6 +50,18 @@ public class EventsController {
 		return "events/new";
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public String DetailedEvent(@PathVariable("id") long id,
+			@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model){
+
+		Event event = eventService.findOne(id);
+		model.addAttribute("event", event);
+		model.addAttribute("venue", event.getVenue());
+
+
+		return "events/info";
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String createEvent(@RequestBody @Valid @ModelAttribute Event event,
 			BindingResult errors, Model model, RedirectAttributes redirectAttrs) {
