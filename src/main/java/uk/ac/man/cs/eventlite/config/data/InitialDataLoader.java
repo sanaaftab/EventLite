@@ -53,6 +53,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event1.setDate(LocalDate.of(2020, 02, 25));
 		event1.setTime(LocalTime.of(18, 00));
 		event1.setName("Event 1");
+		event1.setDescription("Fabulous event");
 		event1.setVenue(venue1);
 		eventService.save(event1);
 		
