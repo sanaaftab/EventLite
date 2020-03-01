@@ -1,5 +1,10 @@
 package uk.ac.man.cs.eventlite.controllers;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +40,10 @@ public class EventsController {
 	public String getAllEvents(Model model, @ModelAttribute SearchQuery searchQuery) {
 
 		model.addAttribute("searchqueryKey", new SearchQuery());
-
+		model.addAttribute("standardDate", new Date());
+		model.addAttribute("localDateTime", LocalDateTime.now());
+		model.addAttribute("localDate", LocalDate.now());
+		model.addAttribute("timestamp", Instant.now());
 		Iterable<Event> eventList;
 		if(searchQuery.getSearchString()==null || searchQuery.getSearchString().isEmpty() )
 			eventList = eventService.findAll();
@@ -51,6 +59,7 @@ public class EventsController {
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newEvent(Model model) {
 		if (!model.containsAttribute("events")) {
+			
 			model.addAttribute("events", new Event());
 			model.addAttribute("venues", venueService.findAll());
 		}

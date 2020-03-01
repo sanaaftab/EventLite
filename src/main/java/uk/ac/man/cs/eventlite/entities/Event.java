@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javax.persistence.*;
-
+import java.time.format.DateTimeFormatter;  
 import org.springframework.format.annotation.DateTimeFormat;
-
+import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -81,5 +81,38 @@ public class Event {
 
 	public void setVenue(Venue venue) {
 		this.venue = venue;
+	}
+	
+	public boolean IsitAfter() 
+	{
+  		
+		LocalDate now  = LocalDate.now();
+		LocalTime timenow = LocalTime.now();
+		LocalDate eventDate = this.getDate();
+		LocalTime time = this.getTime();
+		if(eventDate.isAfter(now))
+			return true;
+		else if(eventDate.isEqual(now) && time.isAfter(timenow))
+			return true;
+		else
+			return false;
+		
+	}
+	
+	public boolean IsitBefore() 
+	{
+  		
+		LocalDate now  = LocalDate.now();
+		LocalTime timenow = LocalTime.now();
+		LocalDate eventDate = this.getDate();
+		LocalTime time = this.getTime();
+		
+		if(eventDate.isAfter(now))
+			return false;
+		else if(eventDate.isEqual(now) && time.isAfter(timenow))
+			return false;
+		else
+			return true;
+			
 	}
 }
