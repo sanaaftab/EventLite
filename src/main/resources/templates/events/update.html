@@ -6,8 +6,70 @@
 </head>
 <body>
   <div layout:fragment="content">
-    <h1>Update an new event</h1>
+  	
+  		<form action="#" th:action="@{'/events/update/' + ${{event.id}}}" th:object="${events}" method="post">
+  		  <div class="form-group">
+  		  	<label for="name">Event name</label>
+      	    <input class="form-control" type="text" name="name" id="name" autofocus="autofocus" />
+      	  </div>
+      	  
+      	  <div class="form-group">
+      	    <label for="date">Event date</label>
+      	    <input class="form-control" type="date" name="date" id="date" />
+      	  </div>
+      	  
+      	  <div class="form-group">
+      	    <label for="time">Event time</label>
+      	    <input class="form-control" type="time" name="time" id="time" />
+      	  </div>  	    
+  
+       	  <div class="form-group">
+      	    <label for="venue">Event venue</label>
+      	    <select class="form-control" name="venue" id="venue">
+      	      <option th:each="venues: ${venues}" th:value="${venues.getId()}" th:text="${venues.getName()}"> </option>
+      	    </select>  
+      	  </div>   	
+      	  
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
+      <a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
+      
+    </form>
     
-  </div>
+  </div>        
+  
+  
+  
+  
+  <!--
+    <h1>Update event</h1>
+    
+    	<form action="#" th:action="@{'/events/update/' + ${{event.id}}}" th:object="${events}" method="post">
+        
+    
+        <label><b>Event Name</b></label>
+	    <input type="text" placeholder="Enter Event Name" name="name" required />
+	
+	    <label><b>Venue</b></label>
+	    <select name="venue" th:field="*{venue}">
+		    <option th:each="v : ${venues}" th:value="${v.id}" th:text="${v.name}"> Venue</option >
+		</select> 
+
+		<label><b>Date:</b></label>
+		<input type="date" value="2020-02-01"  name="date" required />
+		
+		<label><b>Time:</b></label>
+		<input type="time" value="12:00" name="time"  required />
+		
+      
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
+      <a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
+      
+    </form>
+    
+  </div>  
+  
+  -->
+  
+  
 </body>
 </html>
