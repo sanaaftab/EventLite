@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,5 +71,32 @@ public class EventsController {
 //	  public String eventSubmit(@ModelAttribute Event events) {
 //	    return "events";
 //	  }
+	
+	//update
+	
+		/*
+	    @RequestMapping(value="/event/{eventId}/form", method=RequestMethod.POST) 
+	    public String updateForm(ModelMap modelMap, @PathVariable eventId)
+	    {
+	        Event event = eventService.getById(eventId);
+	        modelMap.addAttribute(event);
+	        return "event/update";     
+	    }
+	    */
+		
+		
+		@RequestMapping(value="/event/{eventId}", method=RequestMethod.POST)
+	    public String update(ModelMap modelMap, @Valid @ModelAttribute Event event, BindingResult bindingResult)
+	    {
+	        if(bindingResult.hasErrors())
+	        {
+	            modelMap.addAttribute(event);
+	            return "event/update";
+	        }
+
+	        eventService.save(event);
+
+	        return "redirect:event/" + event.getId() + "/success";
+	    }
 
 }

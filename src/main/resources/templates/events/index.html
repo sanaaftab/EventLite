@@ -20,10 +20,21 @@
       </thead>
       <tbody>
         <tr th:each="e : ${events}">
+        	<form th:action="@{/events/{num}(num=${e.id})}" th:method="update">
+		  	<input type="hidden" name="_method" value="update">
+        
           <td th:text="${e.name}">My Event</td>
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
+          
+         <input type="hidden" name="_method" value="update" />
+        <!-- <td> <button type="submit" class="btn btn-danger" href="/events/update" ><i class="fas fa-random" aria-hidden="true"></i>Update</td> -->
+        <td> <a class="btn btn-primary" role="button" href="/events/update"><i class="fas fa-plus" aria-hidden="true"></i> Update a new event</a> </td>
+        
+        </form>
+      
+          
         </tr>
       </tbody>
     </table>
