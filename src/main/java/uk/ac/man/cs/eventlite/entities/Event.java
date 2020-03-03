@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+
 import java.time.format.DateTimeFormatter;  
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
@@ -16,7 +18,9 @@ public class Event {
 	@Id
 	@GeneratedValue
 	private long id;
-
+	
+	@NotNull
+	@Future
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
@@ -25,8 +29,11 @@ public class Event {
 	@DateTimeFormat(pattern = "HH:mm")
 	private LocalTime time;
 
+	@NotNull
+	@Size(max=256)
 	private String name;
 	
+	@Size(max=500)
 	private String description;
 
 	@ManyToOne
