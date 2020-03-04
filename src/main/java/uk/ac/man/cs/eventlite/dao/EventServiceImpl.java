@@ -27,9 +27,6 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.count();
 	}
 	
-	public Optional<Event> findById(long id) {
-		return eventRepository.findById(id);
-	}
 	
 	@Override
 	public Iterable<Event> findAll() {
