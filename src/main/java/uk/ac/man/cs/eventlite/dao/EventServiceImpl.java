@@ -26,7 +26,11 @@ public class EventServiceImpl implements EventService {
 	public long count() {
 		return eventRepository.count();
 	}
-
+	
+	public Optional<Event> findById(long id) {
+		return eventRepository.findById(id);
+	}
+	
 	@Override
 	public Iterable<Event> findAll() {
 		Sort sort = Sort.by(Sort.Order.asc("date"), Sort.Order.asc("time"));

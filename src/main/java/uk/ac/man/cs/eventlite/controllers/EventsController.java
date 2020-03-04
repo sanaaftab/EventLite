@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,5 +96,55 @@ public class EventsController {
 		return "redirect:/events";
 	}
 	
+	
+	//update
+	
+		/*
+	    @RequestMapping(value="/event/{eventId}/form", method=RequestMethod.POST) 
+	    public String updateForm(ModelMap modelMap, @PathVariable eventId)
+	    {
+	        Event event = eventService.getById(eventId);
+	        modelMap.addAttribute(event);
+	        return "event/update";     
+	    }
+	    */
+		@RequestMapping(value="update/{id}", method=RequestMethod.GET)
+    	public String getFormData(Model model, @PathVariable("id") long id){
+			
+			Optional<Event> event = eventService.findById(id);
+			
+			if(event.isPresent()) {
+				model.addAttribute("event", event.get());
+				model.addAttribute("venues", venueService.findAll());
+				return "events/update";
+			}
+			
+			return "redirect:/events";
+			
+    	}
+	
+		
+		@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
+	    public String update(@ModelAttribute Event event,Model model, @PathVariable("id") long id)
+	    {
+			Event eventToBeUpdated = eventService.findById(id).get();
+			
+			if(event.getName()!=null && !event.getName().equals("")) {
+				eventToBeUpdated.setName(event.getName());
+			}
+			if(event.getDate()!=null) {
+				eventToBeUpdated.setDate(event.getDate());
+			}
+			if(event.getTime()!=null) {
+				eventToBeUpdated.setTime(event.getTime());
+			}			
+			if(event.getVenue()!=null) {
+				eventToBeUpdated.setVenue(event.getVenue());
+			}				
+
+	        eventService.save(event);
+
+	        return "redirect:/events";
+	    }
 
 }
