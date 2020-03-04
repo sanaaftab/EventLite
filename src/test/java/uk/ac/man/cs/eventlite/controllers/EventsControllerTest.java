@@ -3,6 +3,7 @@ package uk.ac.man.cs.eventlite.controllers;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
@@ -75,7 +76,7 @@ public class EventsControllerTest {
 		when(eventService.findAll()).thenReturn(Collections.<Event> emptyList());
 		when(venueService.findAll()).thenReturn(Collections.<Venue> emptyList());
 
-		mvc.perform(get("/events").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+		mvc.perform(get("/events").accept(MediaType.TEXT_HTML).with(csrf())).andExpect(status().isOk())
 				.andExpect(view().name("events/index")).andExpect(handler().methodName("getAllEvents"));
 
 		verify(eventService).findAll();
@@ -87,7 +88,7 @@ public class EventsControllerTest {
 		when(eventService.findAll()).thenReturn(Collections.<Event> singletonList(event));
 		when(venueService.findAll()).thenReturn(Collections.<Venue> singletonList(venue));
 
-		mvc.perform(get("/events").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+		mvc.perform(get("/events").accept(MediaType.TEXT_HTML).with(csrf())).andExpect(status().isOk())
 				.andExpect(view().name("events/index")).andExpect(handler().methodName("getAllEvents"));
 
 		verify(eventService).findAll();
