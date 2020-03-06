@@ -98,17 +98,6 @@ public class EventsController {
 	}
 	
 	
-	//update
-	
-		/*
-	    @RequestMapping(value="/event/{eventId}/form", method=RequestMethod.POST) 
-	    public String updateForm(ModelMap modelMap, @PathVariable eventId)
-	    {
-	        Event event = eventService.getById(eventId);
-	        modelMap.addAttribute(event);
-	        return "event/update";     
-	    }
-	    */
 		@RequestMapping(value="update/{id}", method=RequestMethod.GET)
     	public String getFormData(Model model, @PathVariable("id") long id){
 			
@@ -123,6 +112,16 @@ public class EventsController {
 			return "redirect:/events";
 			
     	}
+		
+		@RequestMapping(value="/{id}" , method = RequestMethod.DELETE)
+		public String deletebyID(@PathVariable long id) {
+			//Here we call deleteByID from eventService which would delete an event according to id of event selected to delete
+			eventService.deleteById(id);
+
+			//redirect the user back to events after action to see new view
+			return "redirect:/events";
+		}
+
 	
 		
 		@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
@@ -133,15 +132,27 @@ public class EventsController {
 			if(event.getName()!=null && !event.getName().equals("")) {
 				eventToBeUpdated.setName(event.getName());
 			}
+			else event.setName(eventToBeUpdated.getName());
+			
+			if(event.getDescription()!=null && !event.getDescription().equals("")) {
+				eventToBeUpdated.setDescription(event.getDescription());
+			}
+			else event.setDescription(eventToBeUpdated.getDescription());
+			
 			if(event.getDate()!=null) {
 				eventToBeUpdated.setDate(event.getDate());
 			}
+			else event.setDate(eventToBeUpdated.getDate());
+			
 			if(event.getTime()!=null) {
 				eventToBeUpdated.setTime(event.getTime());
-			}			
+			}		
+			else event.setTime(eventToBeUpdated.getTime());
+			
 			if(event.getVenue()!=null) {
 				eventToBeUpdated.setVenue(event.getVenue());
 			}				
+			else event.setVenue(eventToBeUpdated.getVenue());
 
 	        eventService.save(event);
 

@@ -51,6 +51,16 @@ public class EventsControllerApi {
 		return eventToResource(eventService.findOne(id));
 	}
 	
+	//used for deleting an event 
+		@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+		public ResponseEntity<?> delEvent(@PathVariable("id") long id) {
+			
+			eventService.deleteById(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+		}
+
+	
 	private Resource<Event> eventToResource(Event event) {
 		Link selfLink = linkTo(EventsControllerApi.class).slash(event.getId()).withSelfRel();
 

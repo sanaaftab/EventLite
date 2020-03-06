@@ -30,6 +30,12 @@
     <th th:text="${event.description}"></th>
   </tr>
 </table> 
+
+<form th:action="@{/events/{num}(num=${event.id})}" th:method="delete">
+		  <input type="hidden" name="_method" value="delete">
+ <input type="hidden" name="_method" value="delete" />
+        <td> <button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete</a></td>
+        </form>
      
 </body>
 </html>

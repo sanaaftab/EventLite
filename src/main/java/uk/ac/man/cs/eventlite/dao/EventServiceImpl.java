@@ -55,4 +55,10 @@ public class EventServiceImpl implements EventService {
 	public Iterable<Event> findAllByName(String searchString){
 		return eventRepository.findAllByNameContainingIgnoreCaseOrderByDateAscTimeAsc(searchString);
 	}
+	
+	@Override
+	public void deleteById(long id) {
+		eventRepository.deleteById(id);
+	}
+
 }

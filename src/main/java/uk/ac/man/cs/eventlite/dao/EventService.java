@@ -17,4 +17,7 @@ public interface EventService {
 	public void save(Event event);
 	
     public Iterable<Event> findAllByName(String searchString);
+    
+    public void deleteById(long id);
+
 }
