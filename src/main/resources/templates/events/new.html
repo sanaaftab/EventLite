@@ -8,11 +8,15 @@
   <div layout:fragment="content">
     <h1>Add a new event</h1>
     
-    <form  th:action="@{/events}" th:object="${eventssssssss}" method="post">
+    <div th:if="${message}" class="alert alert-danger" role="alert">
+		<strong>Invalid input:</strong> <span th:text="${message}">error message</span>
+	</div>
     
+    
+    <form th:action="@{/events/new}" th:object="${event}" method="post">
       
         <label><b>Event Name</b></label>
-	    <input type="text" placeholder="Enter Event Name" name="name" required>
+	    <input type="text" placeholder="Enter Event Name" name="name" required/>
 	
 	    <label><b>Venue</b></label>
 	    <select name="venue" required>

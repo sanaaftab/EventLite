@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,14 +83,30 @@ public class EventsController {
 		return "events/info";
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = "/new", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)	
 	public String createEvent(@RequestBody @Valid @ModelAttribute Event event,
 			BindingResult errors, Model model, RedirectAttributes redirectAttrs) {
 		
 		if (errors.hasErrors()) {
-			model.addAttribute("events", event);
+			List<FieldError> all_errors = errors.getFieldErrors();
+			String p_errors = "";
+		    for (FieldError error : all_errors ) {
+		    	switch (error.getField()) {
+		    	case "name":
+		    		p_errors += "Name must be less than 256 characters. ";
+		    		break;
+		    	case "date":
+		    		p_errors += "Event can only take place in the future. ";
+		    		break;
+		    	case "description":
+		    		p_errors += "Description must be less than 500 characters. ";
+		    		break;
+		    	}
+		    }
+			redirectAttrs.addFlashAttribute("message", p_errors);
 
-			return "events/new";
+			return "redirect:/events/new";
+
 		}
 		
 		eventService.save(event);

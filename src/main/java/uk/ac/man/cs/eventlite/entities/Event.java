@@ -36,6 +36,7 @@ public class Event {
 	@Size(max=500)
 	private String description;
 
+	@NotNull
 	@ManyToOne
 	private Venue venue;
 
