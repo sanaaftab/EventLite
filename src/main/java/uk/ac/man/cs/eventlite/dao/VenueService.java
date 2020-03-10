@@ -10,5 +10,7 @@ public interface VenueService {
 
 	public Iterable<Venue> findAll();
 	
+    public void deleteById(long id);
+	
 	//public Venue findById(long id);
 }
