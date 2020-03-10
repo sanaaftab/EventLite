@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,10 +23,17 @@ public class Venue{
 	@GeneratedValue
 	private long id;
 
-	@Autowired
+	@NotNull
+	@Size(max=256)
 	private String name;
      
-	@Autowired
+	@NotNull
+	//@Size(max=300)
+	@Pattern(regexp = "^[\\p{Alnum}]{1,300}$")
+	private String address;
+	
+	@NotNull
+	@Min(1)  
 	private int capacity;
     
 	
@@ -48,6 +59,14 @@ public class Venue{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public int getCapacity() {

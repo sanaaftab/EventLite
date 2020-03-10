@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.search.SearchQuery;
@@ -72,8 +73,7 @@ public class EventsController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String DetailedEvent(@PathVariable("id") long id,
-			@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model){
+	public String DetailedEvent(@PathVariable("id") long id, Model model){
 
 		Event event = eventService.findOne(id);
 		model.addAttribute("event", event);
@@ -82,6 +82,16 @@ public class EventsController {
 
 		return "events/info";
 	}
+	
+//	@RequestMapping(value = "venue/{id}", method = RequestMethod.GET)
+//	public String DetailedVenue(@PathVariable("id") long id, Model model){
+//
+//		Venue venue = venueService.findOne(id);
+//		model.addAttribute("venue", venue);
+//
+//
+//		return "events/info";
+//	}
 	
 	@RequestMapping(value = "/new", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)	
 	public String createEvent(@RequestBody @Valid @ModelAttribute Event event,
