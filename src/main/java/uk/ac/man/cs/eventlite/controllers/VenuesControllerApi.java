@@ -12,6 +12,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,12 @@ public class VenuesControllerApi {
 	public Resources<Resource<Venue>> getAllVenues() {
 
 		return venueToResource(venueService.findAll());
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public Resource<Venue> venue(@PathVariable("id") long id) {
+
+		return venueToResource(venueService.findOne(id));
 	}
 
 	private Resource<Venue> venueToResource(Venue venue) {

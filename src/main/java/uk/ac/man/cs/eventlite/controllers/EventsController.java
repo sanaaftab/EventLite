@@ -83,15 +83,6 @@ public class EventsController {
 		return "events/info";
 	}
 	
-//	@RequestMapping(value = "venue/{id}", method = RequestMethod.GET)
-//	public String DetailedVenue(@PathVariable("id") long id, Model model){
-//
-//		Venue venue = venueService.findOne(id);
-//		model.addAttribute("venue", venue);
-//
-//
-//		return "events/info";
-//	}
 	
 	@RequestMapping(value = "/new", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)	
 	public String createEvent(@RequestBody @Valid @ModelAttribute Event event,

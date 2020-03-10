@@ -76,4 +76,12 @@ public class Venue{
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+	
+	public Set<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Event> events) {
+		this.events = events;
+	}
 }

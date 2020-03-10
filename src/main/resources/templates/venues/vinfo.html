@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title th:text="${venue.name}"></title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1 th:text="${venue.name}"></h1>
+
+  <table style="width:40%">
+  <tr>
+    <th>ADDRESS</th>
+    <th th:text="${venue.address}"></th>
+  </tr>
+  <tr>
+   <th>CAPACITY</th>
+    <th th:text="${venue.capacity}"></th>
+  </tr>
+  <tr>
+    <th>UPCOMING EVENTS</th>
+    <tr th:each="event : ${venue.events}" th:if="${event.IsitAfter()}">
+      <td><a th:href="@{/events/{num}(num=${event.id})}" th:text ="${event.name}"</a></td>
+  </tr>
+</table> 
+     
+</body>
+</html>

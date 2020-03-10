@@ -3,13 +3,31 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
 <head>
-  <title>All events</title>
+  <title>All Venues</title>
 </head>
 <body>
   <div layout:fragment="content">
-    <h1>CHECKING</h1>
+    <h1>All Venues</h1>
+
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th><i class="fas fa-bolt"></i> Venue</th>
+          <th><i class="fas fa-map-marker-alt"></i> Address</th>
+          <th><i class="fas fa-box"></i> Capacity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="venue : ${venues}">
+           <td><a th:href="@{/venues/{num}(num=${venue.id})}" th:text ="${venue.name}"</a></td>
+          <td th:text="${venue.address}">Event venue</td>
+          <td th:text="${venue.capacity}">Event date</td>
+        </tr>
+      </tbody>
+    </table>
 
   </div>
 
 </body>
 </html>
+
