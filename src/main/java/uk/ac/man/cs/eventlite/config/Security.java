@@ -26,7 +26,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 			
 			//We don't want to allow non-authorised users to access every page! so changed to select which pages are allow for 
 			//all viewing
-			//new AntPathRequestMatcher("/**", "GET"), //old 
+			new AntPathRequestMatcher("/**", "GET"), //old 
 			new AntPathRequestMatcher("/events/"), 
 			new AntPathRequestMatcher("/events"),
 			new AntPathRequestMatcher("/h2-console/**") 
