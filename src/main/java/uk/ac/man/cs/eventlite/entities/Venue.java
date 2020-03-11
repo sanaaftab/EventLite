@@ -28,9 +28,13 @@ public class Venue{
 	private String name;
      
 	@NotNull
-	//@Size(max=300)
-	@Pattern(regexp = "^[\\p{Alnum}]{1,300}$")
+	//@Pattern(regexp = "^[\\p{Alnum}]{1,300}$")
 	private String address;
+	
+	@NotNull
+	//@Pattern(regexp = "^[\\p{Alnum}]{6,7}$")
+	private String postcode;
+	
 	
 	@NotNull
 	@Min(1)  
@@ -67,6 +71,14 @@ public class Venue{
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
 	}
 
 	public int getCapacity() {

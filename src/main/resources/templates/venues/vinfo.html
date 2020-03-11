@@ -13,6 +13,10 @@
     <th>ADDRESS</th>
     <th th:text="${venue.address}"></th>
   </tr>
+   <tr>
+    <th>POSTCODE</th>
+    <th th:text="${venue.postcode}"></th>
+  </tr>
   <tr>
    <th>CAPACITY</th>
     <th th:text="${venue.capacity}"></th>
@@ -20,7 +24,7 @@
   <tr>
     <th>UPCOMING EVENTS</th>
     <tr th:each="event : ${venue.events}" th:if="${event.IsitAfter()}">
-      <td><a th:href="@{/events/{num}(num=${event.id})}" th:text ="${event.name}"</a></td>
+      <th><a th:href="@{/events/{num}(num=${event.id})}" th:text ="${event.name}"</a></th>
   </tr>
 </table> 
      

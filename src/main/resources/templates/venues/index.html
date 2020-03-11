@@ -14,6 +14,7 @@
         <tr>
           <th><i class="fas fa-bolt"></i> Venue</th>
           <th><i class="fas fa-map-marker-alt"></i> Address</th>
+          <th><i class="fas fa-map-marker-alt"></i> PostCode</th>
           <th><i class="fas fa-box"></i> Capacity</th>
         </tr>
       </thead>
@@ -21,6 +22,7 @@
         <tr th:each="venue : ${venues}">
            <td><a th:href="@{/venues/{num}(num=${venue.id})}" th:text ="${venue.name}"</a></td>
           <td th:text="${venue.address}">Event venue</td>
+          <td th:text="${venue.postcode}">Event venue</td>
           <td th:text="${venue.capacity}">Event date</td>
         </tr>
       </tbody>
