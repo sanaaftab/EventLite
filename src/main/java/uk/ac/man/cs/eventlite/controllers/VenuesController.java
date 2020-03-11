@@ -54,5 +54,20 @@ public class VenuesController {
 
 		return "venues/vinfo";
 	}
+	
+	@RequestMapping(value="/{id}" , method = RequestMethod.DELETE)
+	public String deletebyID(@PathVariable long id) {
+		//Here we call deleteByID from venueService which would delete a venue according to id of venue selected to delete
+		
+		//find get venue with this id
+		Venue venue = venueService.findOne(id);
+		
+		//check if venue has any events assigned to it and only delete if no events
+		if ((venue.getEvents()).size() == 0)
+				venueService.deleteById(id);
+
+		//redirect the user back to venues after action to see new view
+		return "redirect:/venues";
+	}
 
 }

@@ -23,6 +23,12 @@
       <td><a th:href="@{/events/{num}(num=${event.id})}" th:text ="${event.name}"</a></td>
   </tr>
 </table> 
+
+<form th:action="@{/venues/{num}(num=${venue.id})}" th:method="delete">
+		  <input type="hidden" name="_method" value="delete">
+ <input type="hidden" name="_method" value="delete" />
+        <td> <button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete</a></td>
+        </form>
      
 </body>
 </html>
