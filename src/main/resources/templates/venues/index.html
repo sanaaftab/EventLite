@@ -26,8 +26,14 @@
       </tbody>
     </table>
 
-  </div>
 
+  
+  <form action="#" th:action="@{/venues}" th:object="${searchqueryKeyVenues}" method="get">
+    <label><b>Search for venues:</b></label>
+	<input type="text" th:field="*{searchString}" placeholder="Search.." name="search" required>
+    <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+ </div>
 </body>
 </html>
 
