@@ -21,14 +21,16 @@
       <tbody>
         <tr th:each="venue : ${venues}">
            <td><a th:href="@{/venues/{num}(num=${venue.id})}" th:text ="${venue.name}"</a></td>
-          <td th:text="${venue.address}">Event venue</td>
+          <td th:text="${venue.roadname}">Event venue</td>
           <td th:text="${venue.postcode}">Event venue</td>
           <td th:text="${venue.capacity}">Event date</td>
         </tr>
       </tbody>
     </table>
 
-
+	<p>
+      <a class="btn btn-primary" role="button" href="/venues/new"><i class="fas fa-plus" aria-hidden="true"></i> Add a new venue</a>
+    </p>
   
   <form action="#" th:action="@{/venues}" th:object="${searchqueryKeyVenues}" method="get">
     <label><b>Search for venues:</b></label>

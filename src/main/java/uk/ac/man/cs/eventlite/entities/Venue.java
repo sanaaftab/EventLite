@@ -32,6 +32,10 @@ public class Venue{
 	private String address;
 	
 	@NotNull
+	@Size(max=300)
+	private String roadname;
+	
+	@NotNull
 	//@Pattern(regexp = "^[\\p{Alnum}]{6,7}$")
 	private String postcode;
 	
@@ -87,6 +91,14 @@ public class Venue{
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+	
+	public String getRoadname() {
+		return roadname;
+	}
+
+	public void setRoadname(String roadname) {
+		this.roadname = roadname;
 	}
 	
 	public Set<Event> getEvents() {
