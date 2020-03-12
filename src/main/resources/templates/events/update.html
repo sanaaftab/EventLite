@@ -6,6 +6,10 @@
 </head>
 <body>
   <div layout:fragment="content">
+  
+      	<div th:if="${message}" class="alert alert-danger" role="alert">
+			<strong>Invalid input:</strong> <span th:text="${message}">error message</span>
+		</div>
   	
   		<form action="#" th:action="@{'/events/update/' + ${{event.id}}}" th:object="${events}" method="post">
   		  <div class="form-group">
