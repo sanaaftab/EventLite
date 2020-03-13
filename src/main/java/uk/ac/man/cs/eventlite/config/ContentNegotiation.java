@@ -17,9 +17,4 @@ public class ContentNegotiation implements WebMvcConfigurer {
 		.mediaType("json", MediaType.APPLICATION_JSON);
 	}
 	
-	 @Override
-	    public void addViewControllers(ViewControllerRegistry registry) {
-	        registry.addViewController("/").setViewName("/home/index.html");
-	        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-	    }
 }
