@@ -26,17 +26,14 @@ public class Venue{
 	@NotNull
 	@Size(max=256)
 	private String name;
-     
-	@NotNull
-	//@Pattern(regexp = "^[\\p{Alnum}]{1,300}$")
-	private String address;
 	
 	@NotNull
 	@Size(max=300)
 	private String roadname;
 	
 	@NotNull
-	//@Pattern(regexp = "^[\\p{Alnum}]{6,7}$")
+	@Size(max = 10)
+	@Pattern(regexp = "[a-zA-Z0-9 -]*" )
 	private String postcode;
 	
 	
@@ -67,14 +64,6 @@ public class Venue{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 	
 	public String getPostcode() {

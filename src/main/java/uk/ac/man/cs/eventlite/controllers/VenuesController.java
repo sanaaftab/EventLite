@@ -88,7 +88,10 @@ public class VenuesController {
 		    		p_errors += "Capacity must be a positive integer. ";
 		    		break;
 		    	case "roadname":
-		    		p_errors += "Road name must be less than 300 characters. ";
+		    		p_errors += "Road name must be less than 300 characters and can only contain letters and numbers. ";
+		    		break;
+		    	case "postcode":
+		    		p_errors += "Invalid postcode. Postcode can only contain letters and numbers";
 		    		break;
 		    	}
 		    }
