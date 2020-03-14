@@ -7,31 +7,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css">
+  
+
 </head>
 
 <body>
   <div class="container">
     <h1>EventLite</h1>
-
     <p>This is EventLite.</p>
+    
+   <div style="float: left; width: 50%;">
     <p><a href="/events">EVENTS</a></p>
     
-     <table class="table table-striped table-hover">
-     <p> UPCOMING EVENTS </p>
-      <tbody>
-        <tr th:each="e : ${events}" th:if="${e.IsitAfter()}">
-          <td><a th:href="@{/events/{num}(num=${e.id})}" th:text ="${e.name}"</a></td>
-          <td><a th:href="@{/venues/{num}(num=${e.venue.id})}" th:text ="${e.venue.name}"</a></td>
-          <td th:text="${{e.date}}">Event date</td>
-          <td th:text="${{e.time}}">Event time</td>
-          <td>
-          <a class="btn btn-primary" th:href="@{/events/update/{id}(id = ${e.id})}" method = "get"> Update event</a> 
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
+     <p> Events coming up: </p>
+    <ul>
+    <th:block th:object="${event}" th:each="e : ${events}">
+     <li><a th:href="@{/events/{num}(num=${e.id})}" th:text ="${e.name}"</a></li>
+    </th:block>
+    </ul>
+    </div>
+    <div style="float: right; width: 50%;">
     <p><a href="/venues">VENUES</a></p>
+    
+     <p> Most Popular Venues: </p>
+      <ul>
+    <th:block th:object="${venue}" th:each="v : ${venues}">
+     <li><a th:href="@{/venues/{num}(num=${v.id})}" th:text ="${v.name}"</a></li>
+    </th:block>
+    </ul>
+    </div>
+
   </div>
 
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
