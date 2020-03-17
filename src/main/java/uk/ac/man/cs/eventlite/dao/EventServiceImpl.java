@@ -1,4 +1,6 @@
 package uk.ac.man.cs.eventlite.dao;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -6,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import uk.ac.man.cs.eventlite.entities.Event;
 
@@ -59,6 +60,12 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void deleteById(long id) {
 		eventRepository.deleteById(id);
+	}
+	
+	@Override
+	public List<Event> find3MostRecent() {
+		
+		return eventRepository.findTop4ByOrderByDateAsc();
 	}
 
 }

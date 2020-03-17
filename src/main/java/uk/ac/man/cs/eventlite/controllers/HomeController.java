@@ -1,6 +1,10 @@
 package uk.ac.man.cs.eventlite.controllers;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +32,13 @@ public class HomeController {
 	@RequestMapping("/")
 	public String GetAllEventsandVenues(Model model) {
 		
-		Iterable<Event> eventList;
-		eventList = eventService.findAll();
+		model.addAttribute("standardDate", new Date());
+		model.addAttribute("localDateTime", LocalDateTime.now());
+		model.addAttribute("localDate", LocalDate.now());
+		model.addAttribute("timestamp", Instant.now());
+		
+		List<Event> eventList;
+		eventList = eventService.find3MostRecent();
 		model.addAttribute("events", eventList);
 		
 		Iterable<Venue> venueList;
