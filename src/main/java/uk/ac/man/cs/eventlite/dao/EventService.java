@@ -22,6 +22,6 @@ public interface EventService {
     
     public void deleteById(long id);
     
-    public List<Event> find3MostRecent();
+    public List<Event> find3MostRecent(LocalDate date);
 
 }

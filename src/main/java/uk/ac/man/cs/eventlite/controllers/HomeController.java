@@ -36,9 +36,9 @@ public class HomeController {
 		model.addAttribute("localDateTime", LocalDateTime.now());
 		model.addAttribute("localDate", LocalDate.now());
 		model.addAttribute("timestamp", Instant.now());
-		
+		LocalDate date = LocalDate.now();
 		List<Event> eventList;
-		eventList = eventService.find3MostRecent();
+		eventList = eventService.find3MostRecent(date);
 		model.addAttribute("events", eventList);
 		
 		Iterable<Venue> venueList;

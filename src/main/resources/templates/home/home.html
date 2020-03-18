@@ -21,7 +21,7 @@
     
      <p> Events coming up: </p>
     <ul>
-    <th:block th:object="${event}" th:each="e : ${events}" th:if="${e.IsitAfter()}">
+    <th:block th:object="${event}" th:each="e : ${events}">
      <li><a th:href="@{/events/{num}(num=${e.id})}" th:text ="${e.name}"</a></li>
     </th:block>
     </ul>

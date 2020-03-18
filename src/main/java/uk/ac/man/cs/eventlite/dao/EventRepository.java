@@ -10,5 +10,5 @@ public interface EventRepository extends JpaRepository<Event, Long>{
 
 	public Iterable<Event> findAllByNameContainingIgnoreCaseOrderByDateAscTimeAsc(String searchQuery);
 	
-	public List<Event> findTop4ByOrderByDateAsc();
+	public List<Event> findTop3ByDateAfterOrderByDateAsc(LocalDate date);
 }
