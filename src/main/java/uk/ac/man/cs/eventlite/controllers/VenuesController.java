@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
@@ -56,7 +59,7 @@ public class VenuesController {
 	}
 	
 	@RequestMapping(value="/{id}" , method = RequestMethod.DELETE)
-	public String deletebyID(@PathVariable long id) {
+	public String deletebyID(@PathVariable long id, RedirectAttributes redirectAttributes) {
 		//Here we call deleteByID from venueService which would delete a venue according to id of venue selected to delete
 		
 		//find get venue with this id
@@ -64,10 +67,24 @@ public class VenuesController {
 		
 		//check if venue has any events assigned to it and only delete if no events
 		if ((venue.getEvents()).size() == 0)
-				venueService.deleteById(id);
+		{	
+			//delete venue
+			venueService.deleteById(id);
+			
+			String sucMes = "Success! Venue " + venue.getName() + " deleted.";
+			
+			//message sent to display
+			redirectAttributes.addFlashAttribute("message", sucMes);
+			redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+			return "redirect:/venues";
+		}	
+		else
+		{	//message sent to display
+			redirectAttributes.addFlashAttribute("message", "Failed to delete venue. There are one or more events linked to the venue you are trying to delete");
+	    	redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+			return "redirect:/venues/{id}";
+		}
 
-		//redirect the user back to venues after action to see new view
-		return "redirect:/venues";
-	}
+	} 
 
 }
