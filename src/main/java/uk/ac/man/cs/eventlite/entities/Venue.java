@@ -1,5 +1,6 @@
 package uk.ac.man.cs.eventlite.entities;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -12,13 +13,30 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.mapbox.geojson.Point;
+
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import uk.ac.man.cs.eventlite.config.data.InitialDataLoader;
 
 
 
 @Entity
 @Table(name = "venues")
 public class Venue{
+	
+	static final String MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiaWxpbmNhaW9uIi"
+					    + "wiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ" ;
+	
 	@Id
 	@GeneratedValue
 	private long id;
@@ -49,6 +67,9 @@ public class Venue{
 	
 	private int numberOfEvents;
 	
+	private double longitude=0;
+	private double latitude=0;
+	
 	
 	public Venue() {
 	}
@@ -75,6 +96,46 @@ public class Venue{
 
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
+		
+		MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+				.accessToken(MAPBOX_ACCESS_TOKEN)
+				.query(this.postcode)
+				.build();
+	
+		mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+			@Override
+			public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+		 
+				List<CarmenFeature> results = response.body().features();
+		 
+				if (results.size() > 0) {
+		 
+				  // Log the first results Point.
+				  Point firstResultPoint = results.get(0).center();
+				  longitude = firstResultPoint.longitude();
+				  latitude = firstResultPoint.latitude();
+				  
+				  try{
+					  Thread.sleep(500L);
+				  }
+				  catch (InterruptedException e) {
+					  e.printStackTrace();
+				  }	
+				  InitialDataLoader.log.info("onResponse: " + firstResultPoint.toString());
+		 
+				} else {
+		 
+				  // No result for your request were found.
+				  InitialDataLoader.log.info("onResponse: No result found");
+		 
+				}
+			}
+		 
+			@Override
+			public void onFailure(Call<GeocodingResponse> call, Throwable throwable) {
+				throwable.printStackTrace();
+			}
+		});
 	}
 
 	public int getCapacity() {
@@ -91,6 +152,47 @@ public class Venue{
 
 	public void setRoadname(String roadname) {
 		this.roadname = roadname;
+		
+		MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+				.accessToken(MAPBOX_ACCESS_TOKEN)
+				.query(this.roadname)
+				.build();
+	
+		mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+			@Override
+			public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+		 
+				List<CarmenFeature> results = response.body().features();
+		 
+				if (results.size() > 0) {
+		 
+				  // Log the first results Point.
+				  Point firstResultPoint = results.get(0).center();
+				  longitude = firstResultPoint.longitude();
+				  latitude = firstResultPoint.latitude();
+				  
+				  try{
+					  Thread.sleep(500L);
+				  }
+				  catch (InterruptedException e) {
+					  e.printStackTrace();
+				  }			  
+				  
+				  InitialDataLoader.log.info("onResponse: " + firstResultPoint.toString());
+		 
+				} else {
+		 
+				  // No result for your request were found.
+				  InitialDataLoader.log.info("onResponse: No result found");
+		 
+				}
+			}
+		 
+			@Override
+			public void onFailure(Call<GeocodingResponse> call, Throwable throwable) {
+				throwable.printStackTrace();
+			}
+		});
 	}
 	
 	public Set<Event> getEvents() {

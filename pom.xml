@@ -17,6 +17,7 @@
   </properties>
 
   <dependencies>
+  
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -149,7 +150,17 @@
     <version>3.0.1.RELEASE</version>
 </dependency>
     
-    
+  	<dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+    </dependency>
+
+	<dependency>
+      <groupId>com.mapbox.mapboxsdk</groupId>
+      <artifactId>mapbox-sdk-services</artifactId>
+      <version>5.0.0</version>
+  	</dependency>  
+  	  
   </dependencies>
 
   <build>

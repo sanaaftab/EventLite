@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EventLite Home</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css">
+  
+
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+  <div class="map">
+	<style>
+		body { margin: 0; padding: 0; }
+		#map { top: 300px; 
+		       position: absolute; margin-bottom: 20px; margin-left: 60px; 
+		       margin-right: 60px; width: 850px; height:400px; border-radius: 4%; }
+	</style>	
+  </div>	
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>EventLite</h1>
+    <p>This is EventLite.</p>
+    
+   <div style="float: left; width: 50%;">
+    <p><a href="/events">EVENTS</a></p>
+    
+     <p> Events coming up: </p>
+    <ul>
+    <th:block th:object="${event}" th:each="e : ${events}">
+     <li><a th:href="@{/events/{num}(num=${e.id})}" th:text ="${e.name}"</a></li>
+    </th:block>
+    </ul>
+    </div>
+    <div style="float: right; width: 50%;">
+    <p><a href="/venues">VENUES</a></p>
+    
+     <p> Most Popular Venues: </p>
+      <ul>
+    <th:block th:object="${venue}" th:each="v : ${venues}">
+     <li><a th:href="@{/venues/{num}(num=${v.id})}" th:text ="${v.name}"</a></li>
+    </th:block>
+    </ul>
+    </div>
+
+  </div>
+  
+  <div id="map">
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1IjoiaWxpbmNhaW9uIiwiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ';
+		var map = new mapboxgl.Map({
+		container: 'map', // container id
+		style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+		center: [-74.5, 40], // starting position [lng, lat]
+		zoom: 8 // starting zoom
+		});
+	</script>
+  </div>
+  
+
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/popper.js/umd/popper.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

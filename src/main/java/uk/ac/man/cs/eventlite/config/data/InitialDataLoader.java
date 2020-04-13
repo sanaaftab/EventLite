@@ -22,7 +22,7 @@ import uk.ac.man.cs.eventlite.entities.Venue;;
 @Profile({ "default", "test" })
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-	private final static Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
+	public final static Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
 
 	@Autowired
 	private EventServiceImpl eventService;
@@ -41,16 +41,16 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		
 		Venue venue1 = new Venue();
 		venue1.setCapacity(1000);
-		venue1.setName("Venue 1");
-		venue1.setRoadname("La bulivar birjar!");
-		venue1.setPostcode("NR 112");
+		venue1.setName("The Footage");
+		venue1.setRoadname("Grosvenor St, Manchester M1 7DZ, United Kingdom");
+		venue1.setPostcode("M1 7DZ");
 		venueService.save(venue1);
 		
 		Venue venue2 = new Venue();
 		venue2.setCapacity(1000);
-		venue2.setName("Venue 2");
-		venue2.setRoadname("Strada Stefan cel mare");
-		venue2.setPostcode("NR 111");
+		venue2.setName("256 Bar");
+		venue2.setRoadname("CQVJ+5C Manchester, United Kingdom");
+		venue2.setPostcode("M14 6LB");
 		venueService.save(venue2);
 		
 		Event event1 = new Event();
