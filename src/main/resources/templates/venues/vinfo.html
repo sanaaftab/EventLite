@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title th:text="${venue.name}"></title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1 th:text="${venue.name}"></h1>
+
+  <table style="width:40%">
+  <tr>
+    <th>ADDRESS</th>
+    <th th:text="${venue.roadname}"></th>
+  </tr>
+   <tr>
+    <th>POSTCODE</th>
+    <th th:text="${venue.postcode}"></th>
+  </tr>
+  <tr>
+   <th>CAPACITY</th>
+    <th th:text="${venue.capacity}"></th>
+  </tr>
+  <tr>
+    <th>UPCOMING EVENTS</th>
+    <tr th:each="event : ${venue.events}" th:if="${event.IsitAfter()}">
+      <th><a th:href="@{/events/{num}(num=${event.id})}" th:text ="${event.name}"</a></th>
+  </tr>
+</table> 
+    <div class="alert alert-danger" role="alert" th:if="${message}"
+      th:text="${message}">
+    </div>
+    
+<form th:action="@{/venues/{num}(num=${venue.id})}" th:method="delete">
+		  <input type="hidden" name="_method" value="delete">
+ <input type="hidden" name="_method" value="delete" />
+        <td> <button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete</a></td>
+        </form>
+        
+
+     
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>New</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>Add a new venue</h1>
+    
+    <div th:if="${message}" class="alert alert-danger" role="alert">
+		<strong>Invalid input:</strong> <span th:text="${message}">error message</span>
+	</div>
+    
+    
+    <form th:action="@{/venues/new}" th:object="${venue}" method="post">
+      
+        <label><b>Venue Name:</b></label>
+	    <input type="text" name="name" required/>
+
+		<label><b>Capacity:</b></label>
+		<input type="number"  name="capacity" required/>
+		
+		<label><b>Road Name:</b></label>
+		<input type="text" name="roadname" required/>
+		
+		<label><b>Postcode:</b></label>
+	    <input type="text" name="postcode" required/>
+		
+      
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
+      <a class="btn btn-warning" role="button" href="/venues"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
+      
+    </form>
+  </div>
+</body>
+</html>
