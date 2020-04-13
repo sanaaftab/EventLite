@@ -1,5 +1,6 @@
 package uk.ac.man.cs.eventlite.controllers;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
+import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.search.SearchQuery;
 
@@ -101,6 +103,78 @@ public class VenuesController {
 
 		return "redirect:/venues";
 	}
+	
+	@RequestMapping(value="update/{id}", method=RequestMethod.GET)
+	public String getFormData(Model model, @PathVariable("id") long id){
+		
+		Optional<Venue> venue = venueService.findById(id);
+		
+		if(venue.isPresent()) {
+			model.addAttribute("venue", venue.get());
+			return "venues/update";
+		}
+		
+		return "redirect:/venues";
+		
+	}
+	
+	@RequestMapping(value="/update/{id}", method=RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String update(@RequestBody @Valid @ModelAttribute Venue venue, BindingResult errors, 
+    		Model model, RedirectAttributes redirectAttrs, @PathVariable("id") long id)
+    {
+		Venue venueToBeUpdated = venueService.findById(id).get();
+
+		if (errors.hasErrors()) {
+			List<FieldError> all_errors = errors.getFieldErrors();
+			String p_errors = "";
+		    for (FieldError error : all_errors ) {
+		    	switch (error.getField()) {
+		    	case "name":
+		    		p_errors += "Name must be less than 256 characters. ";
+		    		break;
+		    	case "capacity":
+		    		p_errors += "Capacity must be a positive integer. ";
+		    		break;
+		    	case "roadname":
+		    		p_errors += "Road name must be less than 300 characters and can only contain letters and numbers. ";
+		    		break;
+		    	case "postcode":
+		    		p_errors += "Invalid postcode. Postcode can only contain letters and numbers";
+		    		break;
+		    	}
+		    }
+			redirectAttrs.addFlashAttribute("message", p_errors);
+
+			return "redirect:/venues/update/{id}";
+
+		}
+		
+		if(venue.getName()!=null && !venue.getName().equals("")) {
+			venueToBeUpdated.setName(venue.getName());
+		}
+		else venue.setName(venueToBeUpdated.getName());
+		
+		if(venue.getPostcode()!=null && !venue.getPostcode().equals("")) {
+			venueToBeUpdated.setPostcode(venue.getPostcode());
+		}
+		else venue.setPostcode(venueToBeUpdated.getPostcode());
+		
+		if(venue.getRoadname()!=null && !venue.getRoadname().equals("")) {
+			venueToBeUpdated.setRoadname(venue.getRoadname());
+		}
+		else venue.setRoadname(venueToBeUpdated.getRoadname());
+		
+		if(venue.getCapacity()!=0) {
+			venueToBeUpdated.setCapacity(venue.getCapacity());
+		}		
+		else venue.setCapacity(venueToBeUpdated.getCapacity());
+		
+        venueService.save(venue);
+
+        return "redirect:/venues";
+    }
+
+	
 
 	@RequestMapping(value="/{id}" , method = RequestMethod.DELETE)
 	public String deletebyID(@PathVariable long id, RedirectAttributes redirectAttributes) {

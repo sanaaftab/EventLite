@@ -15,17 +15,21 @@
       <thead>
         <tr>
           <th><i class="fas fa-bolt"></i> Venue</th>
-          <th><i class="fas fa-map-marker-alt"></i> Address</th>
-          <th><i class="fas fa-map-marker-alt"></i> PostCode</th>
+          <th><i class="fas fa-map-marker-alt"></i> Address (Roadname)</th>
+          <th><i class="fas fa-map-marker-alt"></i> Postcode</th>
           <th><i class="fas fa-box"></i> Capacity</th>
+          <th><i class="fas fa-pen"></i> Options</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="venue : ${venues}">
            <td><a th:href="@{/venues/{num}(num=${venue.id})}" th:text ="${venue.name}"</a></td>
-          <td th:text="${venue.roadname}">Event venue</td>
-          <td th:text="${venue.postcode}">Event venue</td>
-          <td th:text="${venue.capacity}">Event date</td>
+          <td th:text="${venue.roadname}">Venue roadname</td>
+          <td th:text="${venue.postcode}">Venue postcode</td>
+          <td th:text="${venue.capacity}">Venue capacity</td>
+          <td>
+          <a class="btn btn-primary" th:href="@{/venues/update/{id}(id = ${venue.id})}" method = "get"> Update venue</a> 
+          </td>
         </tr>
       </tbody>
     </table>

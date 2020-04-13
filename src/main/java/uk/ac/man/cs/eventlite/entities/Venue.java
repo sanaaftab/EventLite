@@ -29,6 +29,7 @@ public class Venue{
 	
 	@NotNull
 	@Size(max=300)
+	@Pattern(regexp = "[a-zA-Z0-9 -]*" )
 	private String roadname;
 	
 	@NotNull
