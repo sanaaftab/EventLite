@@ -46,6 +46,8 @@ public class Venue{
 	@OneToMany(mappedBy = "venue")
 	private Set<Event> events;
 	
+	private int numberOfEvents;
+	
 	
 	public Venue() {
 	}
@@ -97,4 +99,13 @@ public class Venue{
 	public void setEvents(Set<Event> events) {
 		this.events = events;
 	}
+	
+	public int getNumberOfEvents() {
+		return getEvents().size();
+	}
+	
+	public void setNumberOfEvents(int numberOfEvents) {
+		this.numberOfEvents = numberOfEvents;
+	}
+	
 }

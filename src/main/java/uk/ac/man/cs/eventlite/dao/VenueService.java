@@ -1,5 +1,6 @@
 package uk.ac.man.cs.eventlite.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import uk.ac.man.cs.eventlite.entities.Event;
@@ -20,5 +21,6 @@ public interface VenueService {
 	public void deleteById(long id);
 	
 	public Iterable<Venue> findAllByName(String searchString);
-
+    
+	public List<Venue> findTop3MostPopularVenues();
 }

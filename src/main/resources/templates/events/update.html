@@ -35,7 +35,7 @@
        	  <div class="form-group">
       	    <label for="venue">Event venue</label>
       	    <select class="form-control" name="venue" id="venue">
-      	      <option value="" disabled selected>Change Venue if you want</option>
+      	      <option  th:value="${event.venue.id}" >Change Venue if you want</option>
       	      <option th:each="venue: ${venues}" th:value="${venue.id}" th:text="${venue.name}"> </option>
       	    </select>  
       	  </div>   	

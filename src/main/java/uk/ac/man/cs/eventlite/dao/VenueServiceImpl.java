@@ -1,5 +1,6 @@
 package uk.ac.man.cs.eventlite.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,10 @@ public class VenueServiceImpl implements VenueService{
 	public void deleteById(long id) {
 		venueRepository.deleteById(id);
 	}
-	
+    
+	@Override
+	public List<Venue> findTop3MostPopularVenues(){
+		return venueRepository.findTop3ByOrderByNumberOfEventsDesc();
+	}
 
 }

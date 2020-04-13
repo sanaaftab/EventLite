@@ -41,13 +41,11 @@ public class HomeController {
 		eventList = eventService.find3MostRecent(date);
 		model.addAttribute("events", eventList);
 		
-		Iterable<Venue> venueList;
-		venueList = venueService.findAll();
+		List<Venue> venueList;
+		venueList = venueService.findTop3MostPopularVenues();
 		model.addAttribute("venues", venueList);
 		
 		return "home/home";
 	}
-	//<form method="get" action="/">
-  //  <button type="submit" class="fa fa-home">Home</button>
-//</form>
+	
 }
