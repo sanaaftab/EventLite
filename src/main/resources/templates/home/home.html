@@ -12,15 +12,17 @@
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
   <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
-  <div class="map">
+
+  <script src='https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.css' rel='stylesheet' />
+  
 	<style>
 		body { margin: 0; padding: 0; }
 		#map { top: 300px; 
 		       position: absolute; margin-bottom: 20px; margin-left: 60px; 
 		       margin-right: 60px; width: 850px; height:400px; border-radius: 4%; }
 	</style>	
-  </div>	
-
+  	
 </head>
 
 <body>
@@ -34,7 +36,7 @@
      <p> Events coming up: </p>
     <ul>
     <th:block th:object="${event}" th:each="e : ${events}">
-     <li><a th:href="@{/events/{num}(num=${e.id})}" th:text ="${e.name}"</a></li>
+     <li><a th:href="@{/events/{num}(num=${e.id})}" th:text ="${e.name}"></a></li>
     </th:block>
     </ul>
     </div>
@@ -44,7 +46,7 @@
      <p> Most Popular Venues: </p>
       <ul>
     <th:block th:object="${venue}" th:each="v : ${venues}">
-     <li><a th:href="@{/venues/{num}(num=${v.id})}" th:text ="${v.name}"</a></li>
+     <li><a th:href="@{/venues/{num}(num=${v.id})}" th:text ="${v.name}"></a></li>
     </th:block>
     </ul>
     </div>
@@ -52,14 +54,33 @@
   </div>
   
   <div id="map">
+
 	<script>
-		mapboxgl.accessToken = 'pk.eyJ1IjoiaWxpbmNhaW9uIiwiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ';
-		var map = new mapboxgl.Map({
-		container: 'map', // container id
-		style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-		center: [-2.244, 53.484], // starting position [lng, lat]
-		zoom: 9 // starting zoom
-		});
+
+        L.mapbox.accessToken = 'pk.eyJ1IjoiaWxpbmNhaW9uIiwiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ';
+        var map = L.mapbox.map('map')
+            .setView([53.484, -2.244], 9)
+            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+
+        function displayMarker(latitude, longitude){
+            var myIcon = L.mapbox.marker.icon({
+            'marker-color': '#3bb2d0',
+            'marker-size': 'large',
+            'marker-symbol': 'rocket'
+            
+            });   
+            // L.marker is a low-level marker constructor in Leaflet.
+            L.marker([latitude, longitude], { icon: myIcon }).addTo(map);
+        }
+        displayMarker(53.484, -2.244); //this function now displays a marker in the centre of Manchester or smth
+        //we need to call this for every upcoming event.venue somehow
+        //
+        //love,
+        //Geana   
+        //P.S: right-click -> inspect on chrome and you can see the console prints 
+        //P.P.S: you might wanna use console.log() for debugging stuff..
+
+
 	</script>
   </div>
   

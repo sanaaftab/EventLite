@@ -210,5 +210,12 @@ public class Venue{
 	public void setNumberOfEvents(int numberOfEvents) {
 		this.numberOfEvents = numberOfEvents;
 	}
+	public double getLatitude() {
+		return latitude;
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+	
 	
 }
