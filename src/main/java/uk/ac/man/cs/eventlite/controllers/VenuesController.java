@@ -1,9 +1,4 @@
 package uk.ac.man.cs.eventlite.controllers;
-
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -23,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
-import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.search.SearchQuery;
 
@@ -61,6 +55,7 @@ public class VenuesController {
 
 		return "venues/vinfo";
 	}
+	
 	
 	@ModelAttribute
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -106,5 +101,34 @@ public class VenuesController {
 
 		return "redirect:/venues";
 	}
+
+	@RequestMapping(value="/{id}" , method = RequestMethod.DELETE)
+	public String deletebyID(@PathVariable long id, RedirectAttributes redirectAttributes) {
+		//Here we call deleteByID from venueService which would delete a venue according to id of venue selected to delete
+		
+		//find get venue with this id
+		Venue venue = venueService.findOne(id);
+		
+		//check if venue has any events assigned to it and only delete if no events
+		if ((venue.getEvents()).size() == 0)
+		{	
+			//delete venue
+			venueService.deleteById(id);
+			
+			String sucMes = "Success! Venue " + venue.getName() + " deleted.";
+			
+			//message sent to display
+			redirectAttributes.addFlashAttribute("message", sucMes);
+			redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+			return "redirect:/venues";
+		}	
+		else
+		{	//message sent to display
+			redirectAttributes.addFlashAttribute("message", "Failed to delete venue. There are one or more events linked to the venue you are trying to delete");
+	    	redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+			return "redirect:/venues/{id}";
+		}
+
+	} 
 
 }
