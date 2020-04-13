@@ -19,7 +19,7 @@
   </tr>
   <tr>
     <th>VENUE</th>
-    <th th:text="${venue.name}"></th>
+    <th><a th:href="@{/venues/{num}(num=${venue.id})}" th:text ="${venue.name}"</a></th>
   </tr>
   <tr>
     <th>VENUE CAPACITY</th>

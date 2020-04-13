@@ -6,6 +6,10 @@
 </head>
 <body>
   <div layout:fragment="content">
+  
+      	<div th:if="${message}" class="alert alert-danger" role="alert">
+			<strong>Invalid input:</strong> <span th:text="${message}">error message</span>
+		</div>
   	
   		<form action="#" th:action="@{'/events/update/' + ${{event.id}}}" th:object="${events}" method="post">
   		  <div class="form-group">
@@ -31,7 +35,7 @@
        	  <div class="form-group">
       	    <label for="venue">Event venue</label>
       	    <select class="form-control" name="venue" id="venue">
-      	      <option value="" disabled selected>Change Venue if you want</option>
+      	      <option  th:value="${event.venue.id}" >Change Venue if you want</option>
       	      <option th:each="venue: ${venues}" th:value="${venue.id}" th:text="${venue.name}"> </option>
       	    </select>  
       	  </div>   	

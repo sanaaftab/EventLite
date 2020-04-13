@@ -26,11 +26,17 @@ public class Venue{
 	@NotNull
 	@Size(max=256)
 	private String name;
-     
+	
 	@NotNull
-	//@Size(max=300)
-	@Pattern(regexp = "^[\\p{Alnum}]{1,300}$")
-	private String address;
+	@Size(max=300)
+	@Pattern(regexp = "[a-zA-Z0-9 -]*" )
+	private String roadname;
+	
+	@NotNull
+	@Size(max = 10)
+	@Pattern(regexp = "[a-zA-Z0-9 -]*" )
+	private String postcode;
+	
 	
 	@NotNull
 	@Min(1)  
@@ -40,6 +46,8 @@ public class Venue{
 	@Autowired
 	@OneToMany(mappedBy = "venue")
 	private Set<Event> events;
+	
+	private int numberOfEvents;
 	
 	
 	public Venue() {
@@ -61,12 +69,12 @@ public class Venue{
 		this.name = name;
 	}
 	
-	public String getAddress() {
-		return address;
+	public String getPostcode() {
+		return postcode;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
 	}
 
 	public int getCapacity() {
@@ -76,4 +84,29 @@ public class Venue{
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+	
+	public String getRoadname() {
+		return roadname;
+	}
+
+	public void setRoadname(String roadname) {
+		this.roadname = roadname;
+	}
+	
+	public Set<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Event> events) {
+		this.events = events;
+	}
+	
+	public int getNumberOfEvents() {
+		return getEvents().size();
+	}
+	
+	public void setNumberOfEvents(int numberOfEvents) {
+		this.numberOfEvents = numberOfEvents;
+	}
+	
 }

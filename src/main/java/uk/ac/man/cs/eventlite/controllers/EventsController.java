@@ -83,15 +83,6 @@ public class EventsController {
 		return "events/info";
 	}
 	
-//	@RequestMapping(value = "venue/{id}", method = RequestMethod.GET)
-//	public String DetailedVenue(@PathVariable("id") long id, Model model){
-//
-//		Venue venue = venueService.findOne(id);
-//		model.addAttribute("venue", venue);
-//
-//
-//		return "events/info";
-//	}
 	
 	@RequestMapping(value = "/new", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)	
 	public String createEvent(@RequestBody @Valid @ModelAttribute Event event,
@@ -152,10 +143,33 @@ public class EventsController {
 
 	
 		
-		@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
-	    public String update(@ModelAttribute Event event,Model model, @PathVariable("id") long id)
+		@RequestMapping(value="/update/{id}", method=RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	    public String update(@RequestBody @Valid @ModelAttribute Event event, BindingResult errors, 
+	    		Model model, RedirectAttributes redirectAttrs, @PathVariable("id") long id)
 	    {
 			Event eventToBeUpdated = eventService.findById(id).get();
+	
+			if (errors.hasErrors()) {
+				List<FieldError> all_errors = errors.getFieldErrors();
+				String p_errors = "";
+			    for (FieldError error : all_errors ) {
+			    	switch (error.getField()) {
+			    	case "name":
+			    		p_errors += "Name must be less than 256 characters. ";
+			    		break;
+			    	case "date":
+			    		p_errors += "Event can only take place in the future. ";
+			    		break;
+			    	case "description":
+			    		p_errors += "Description must be less than 500 characters. ";
+			    		break;
+			    	}
+			    }
+				redirectAttrs.addFlashAttribute("message", p_errors);
+
+				return "redirect:/events/update/{id}";
+
+			}
 			
 			if(event.getName()!=null && !event.getName().equals("")) {
 				eventToBeUpdated.setName(event.getName());

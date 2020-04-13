@@ -5,13 +5,17 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +40,12 @@ public class VenuesControllerApi {
 
 		return venueToResource(venueService.findAll());
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public Resource<Venue> venue(@PathVariable("id") long id) {
+
+		return venueToResource(venueService.findOne(id));
+	}
 
 	private Resource<Venue> venueToResource(Venue venue) {
 		Link selfLink = linkTo(VenuesControllerApi.class).slash(venue.getId()).withSelfRel();
@@ -53,4 +63,17 @@ public class VenuesControllerApi {
 
 		return new Resources<Resource<Venue>>(resources, selfLink);
 	}
+	
+	//used for deleting a venue 
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> delVenue(@PathVariable("id") long id) {
+		
+		Venue venue = venueService.findOne(id);
+		if ((venue.getEvents()).size() == 0)
+				venueService.deleteById(id);
+			
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+	}
+
 }

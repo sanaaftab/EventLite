@@ -6,6 +6,7 @@
   <title>All events</title>
 </head>
 <body>
+<a class="btn btn-primary" onclick="window.location.href = /static/index ">Click Here</a>
   <div layout:fragment="content">
     <h1>Future events</h1>
 
@@ -16,12 +17,13 @@
           <th><i class="fas fa-map-marker-alt"></i> Venue</th>
           <th><i class="fas fa-calendar"></i> Date</th>
           <th><i class="fas fa-clock"></i> Time</th>
+          <th><i class="fas fa-pen"></i> Options</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="e : ${events}" th:if="${e.IsitAfter()}">
           <td><a th:href="@{/events/{num}(num=${e.id})}" th:text ="${e.name}"</a></td>
-          <td th:text="${e.venue.name}">Event venue</td>
+          <td><a th:href="@{/venues/{num}(num=${e.venue.id})}" th:text ="${e.venue.name}"</a></td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
           <td>
@@ -49,7 +51,7 @@
       <tbody>
         <tr th:each="e : ${events} "th:if="${e.IsitBefore()}">
           <td><a th:href="@{/events/{num}(num=${e.id})}" th:text ="${e.name}"</a></td>
-          <td th:text="${e.venue.name}">Event venue</td>
+          <td><a th:href="@{/venues/{num}(num=${e.venue.id})}" th:text ="${e.venue.name}"</a></td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
         </tr>

@@ -1,8 +1,10 @@
 package uk.ac.man.cs.eventlite.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import uk.ac.man.cs.eventlite.entities.Event;
@@ -21,7 +23,8 @@ public class VenueServiceImpl implements VenueService{
 	
 	@Override
 	public Iterable<Venue> findAll() {
-		return venueRepository.findAll();
+		Sort sort = Sort.by(Sort.Order.asc("name").ignoreCase());
+		return venueRepository.findAll(sort);
 	}
 
 	@Override
@@ -40,10 +43,20 @@ public class VenueServiceImpl implements VenueService{
 	public Venue findOne(long id) {
 		return findById(id).orElse(null);
 	}
+	
+	@Override
+	public Iterable<Venue> findAllByName(String searchString){
+		return venueRepository.findAllByNameContainingIgnoreCaseOrderByNameAsc(searchString);
+	}
 
 	@Override
 	public void deleteById(long id) {
 		venueRepository.deleteById(id);
+	}
+    
+	@Override
+	public List<Venue> findTop3MostPopularVenues(){
+		return venueRepository.findTop3ByOrderByNumberOfEventsDesc();
 	}
 
 }
