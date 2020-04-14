@@ -6,6 +6,23 @@
 </head>
 <body>
   <div layout:fragment="content">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src='https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.css' rel='stylesheet' />
+  
+  <div class="map">
+	<style>
+	
+	#map{width: 500px;
+	border-style: outset;
+  height: 300px;
+  position: absolute;
+  top: 60px;
+  left: 580px;
+  border-radius: 4%; }
+	</style>	
+  </div>	
+  
     <h1 th:text="${event.name}"></h1>
 
   <table style="width:40%">
@@ -29,13 +46,46 @@
     <th>DESCRIPTION</th>
     <th th:text="${event.description}"></th>
   </tr>
+  <tr>
+    <th>LAT AND LONG VENUE</th>
+    <th th:text="${lat}"></th>
+     <th th:text="${lon}"></th>
+  </tr>
 </table> 
 
+<div>
 <form th:action="@{/events/{num}(num=${event.id})}" th:method="delete">
 		  <input type="hidden" name="_method" value="delete">
  <input type="hidden" name="_method" value="delete" />
         <td> <button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete</a></td>
-        </form>
+ </form>
+ </div>  
+       <div>
+        <div id="map">
+	<script th:inline="javascript">
+		 L.mapbox.accessToken = 'pk.eyJ1IjoiaWxpbmNhaW9uIiwiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ';
+        var map = L.mapbox.map('map')
+            .setView([53.484, -2.244], 9)
+            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+
+        function displayMarker(latitude, longitude){
+            var myIcon = L.mapbox.marker.icon({
+            'marker-color': '#3bb2d0',
+            'marker-size': 'large',
+            'marker-symbol': 'rocket'
+            
+            });  
+       
+            // L.marker is a low-level marker constructor in Leaflet.
+            L.marker([latitude, longitude], { icon: myIcon }).addTo(map);
+        }
+        
+        displayMarker([(${lat})],[(${lon})]);
+        
+
+	</script>
+  </div>
+  </div>
      
 </body>
 </html>

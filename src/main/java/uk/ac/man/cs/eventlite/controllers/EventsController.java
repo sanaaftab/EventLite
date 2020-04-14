@@ -78,6 +78,8 @@ public class EventsController {
 		Event event = eventService.findOne(id);
 		model.addAttribute("event", event);
 		model.addAttribute("venue", event.getVenue());
+		model.addAttribute("lat", event.getVenue().getLatitude());
+		model.addAttribute("lon", event.getVenue().getLongitude());
 
 
 		return "events/info";
