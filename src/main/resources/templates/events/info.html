@@ -18,7 +18,7 @@
   height: 300px;
   position: absolute;
   top: 60px;
-  left: 680px;
+  left: 580px;
   border-radius: 4%; }
 	</style>	
   </div>	
@@ -65,7 +65,7 @@
 	<script th:inline="javascript">
 		 L.mapbox.accessToken = 'pk.eyJ1IjoiaWxpbmNhaW9uIiwiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ';
         var map = L.mapbox.map('map')
-            .setView([53.484, -2.244], 13)
+            .setView([53.484, -2.244], 10)
             .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
 
         function displayMarker(latitude, longitude){

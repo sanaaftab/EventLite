@@ -45,10 +45,10 @@
     </table>
     
     <div id="map">
-	<script>
+	<script type="text/javascript" th:inline="javascript">
 		 L.mapbox.accessToken = 'pk.eyJ1IjoiaWxpbmNhaW9uIiwiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ';
         var map = L.mapbox.map('map')
-            .setView([53.484, -2.244], 13)
+            .setView([53.484, -2.244], 12)
             .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
 
         function displayMarker(latitude, longitude){
@@ -61,8 +61,14 @@
             // L.marker is a low-level marker constructor in Leaflet.
             L.marker([latitude, longitude], { icon: myIcon }).addTo(map);
         }
-        displayMarker(53.484, -2.244);
-        displayMarker(53.484, -2.254);
+    
+      /*<![CDATA[*/
+      /*[# th:each="e : ${events}"]*/
+          if(/*[(${e.IsitAfter()})]*/)
+          displayMarker(/*[(${e.venue.latitude})]*/, /*[(${e.venue.longitude})]*/);
+      /*[/]*/
+      /*]]>*/
+     
 
 	</script>
   </div>
