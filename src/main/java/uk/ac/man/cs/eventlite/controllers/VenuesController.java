@@ -110,7 +110,7 @@ public class VenuesController {
 		}
 		MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
 				.accessToken(MAPBOX_ACCESS_TOKEN)
-				.query(venue.getRoadname() + " " + venue.getPostcode())
+				.query(venue.getPostcode() + " " + venue.getRoadname())
 				.build();
 
 			mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
