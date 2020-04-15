@@ -67,8 +67,8 @@ public class Venue{
 	
 	private int numberOfEvents;
 	
-	private double longitude=0;
-	private double latitude=0;
+	private double longitude;
+	private double latitude;
 	
 	
 	public Venue() {
@@ -96,46 +96,6 @@ public class Venue{
 
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
-		
-		MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
-				.accessToken(MAPBOX_ACCESS_TOKEN)
-				.query(this.postcode)
-				.build();
-	
-		mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
-			@Override
-			public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
-		 
-				List<CarmenFeature> results = response.body().features();
-		 
-				if (results.size() > 0) {
-		 
-				  // Log the first results Point.
-				  Point firstResultPoint = results.get(0).center();
-				  longitude = firstResultPoint.longitude();
-				  latitude = firstResultPoint.latitude();
-				  
-				  try{
-					  Thread.sleep(500L);
-				  }
-				  catch (InterruptedException e) {
-					  e.printStackTrace();
-				  }	
-				  InitialDataLoader.log.info("onResponse: " + firstResultPoint.toString());
-		 
-				} else {
-		 
-				  // No result for your request were found.
-				  InitialDataLoader.log.info("onResponse: No result found");
-		 
-				}
-			}
-		 
-			@Override
-			public void onFailure(Call<GeocodingResponse> call, Throwable throwable) {
-				throwable.printStackTrace();
-			}
-		});
 	}
 
 	public int getCapacity() {
@@ -152,47 +112,6 @@ public class Venue{
 
 	public void setRoadname(String roadname) {
 		this.roadname = roadname;
-		
-		MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
-				.accessToken(MAPBOX_ACCESS_TOKEN)
-				.query(this.roadname)
-				.build();
-	
-		mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
-			@Override
-			public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
-		 
-				List<CarmenFeature> results = response.body().features();
-		 
-				if (results.size() > 0) {
-		 
-				  // Log the first results Point.
-				  Point firstResultPoint = results.get(0).center();
-				  longitude = firstResultPoint.longitude();
-				  latitude = firstResultPoint.latitude();
-				  
-				  try{
-					  Thread.sleep(500L);
-				  }
-				  catch (InterruptedException e) {
-					  e.printStackTrace();
-				  }			  
-				  
-				  InitialDataLoader.log.info("onResponse: " + firstResultPoint.toString());
-		 
-				} else {
-		 
-				  // No result for your request were found.
-				  InitialDataLoader.log.info("onResponse: No result found");
-		 
-				}
-			}
-		 
-			@Override
-			public void onFailure(Call<GeocodingResponse> call, Throwable throwable) {
-				throwable.printStackTrace();
-			}
-		});
 	}
 	
 	public Set<Event> getEvents() {
@@ -213,9 +132,14 @@ public class Venue{
 	public double getLatitude() {
 		return latitude;
 	}
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
 	public double getLongitude() {
 		return longitude;
 	}
-	
+	public void setLongitude(Double longtitude) {
+		this.longitude = longtitude;
+	}
 	
 }

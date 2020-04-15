@@ -41,20 +41,24 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		
 		Venue venue1 = new Venue();
 		venue1.setCapacity(1000);
-		venue1.setName("The Footage");
-		venue1.setRoadname("Grosvenor St, Manchester M1 7DZ, United Kingdom");
-		venue1.setPostcode("M1 7DZ");
+		venue1.setName("The University of Manchester");
+		venue1.setRoadname("Oxford Road Manchester");
+		venue1.setPostcode("M13 9PL");
+		venue1.setLatitude(53.466);
+		venue1.setLongitude(-2.233);
 		venueService.save(venue1);
 		
 		Venue venue2 = new Venue();
 		venue2.setCapacity(1000);
 		venue2.setName("256 Bar");
-		venue2.setRoadname("CQVJ+5C Manchester, United Kingdom");
+		venue2.setRoadname("256 Wilmslow Road Manchester");
 		venue2.setPostcode("M14 6LB");
+		venue2.setLatitude(53.443);
+		venue2.setLongitude(-2.218);
 		venueService.save(venue2);
 		
 		Event event1 = new Event();
-		event1.setDate(LocalDate.of(2020, 02, 25));
+		event1.setDate(LocalDate.of(2021, 02, 25));
 		event1.setTime(LocalTime.of(18, 00));
 		event1.setName("Event 1");
 		event1.setDescription("Fabulous event");

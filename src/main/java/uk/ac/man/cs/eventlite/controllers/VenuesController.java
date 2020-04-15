@@ -17,9 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
-import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.search.SearchQuery;
 
@@ -27,6 +35,9 @@ import uk.ac.man.cs.eventlite.search.SearchQuery;
 @RequestMapping(value = "/venues", produces = { MediaType.TEXT_HTML_VALUE })
 public class VenuesController {
 
+	static final String MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiaWxpbmNhaW9uIi"
+		    + "wiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ" ;
+	
 	@Autowired
 	private EventService eventService;
 
@@ -70,7 +81,7 @@ public class VenuesController {
 	}
 	
 	@RequestMapping(value = "/new", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)	
-	public String createEvent(@RequestBody @Valid @ModelAttribute Venue venue,
+	public String createVenue(@RequestBody @Valid @ModelAttribute Venue venue,
 			BindingResult errors, Model model, RedirectAttributes redirectAttrs) {
 		
 		if (errors.hasErrors()) {
@@ -97,7 +108,37 @@ public class VenuesController {
 			return "redirect:/venues/new";
 
 		}
+		MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+				.accessToken(MAPBOX_ACCESS_TOKEN)
+				.query(venue.getRoadname() + " " + venue.getPostcode())
+				.build();
+
+			mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+			@Override
+			public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
 		
+				List<CarmenFeature> results = response.body().features();
+	
+				if (results.size() > 0) {
+				  Point firstResultPoint = results.get(0).center();
+				  venue.setLatitude(firstResultPoint.latitude());
+				  venue.setLongitude(firstResultPoint.longitude());
+				}
+			}
+		
+			@Override
+			public void onFailure(Call<GeocodingResponse> call, Throwable throwable) {
+				throwable.printStackTrace();
+			}
+		});
+		
+		try {
+			Thread.sleep(1000L);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+				
+
 		venueService.save(venue);
 		redirectAttrs.addFlashAttribute("ok_message", "New event added.");
 
