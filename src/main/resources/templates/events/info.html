@@ -18,7 +18,7 @@
   height: 300px;
   position: absolute;
   top: 60px;
-  left: 580px;
+  right:10%;
   border-radius: 4%; }
 	</style>	
   </div>	
@@ -80,9 +80,15 @@
             L.marker([latitude, longitude], { icon: myIcon }).addTo(map);
         }
         
-        displayMarker([(${lat})],[(${lon})]);
         
-
+        displayMarker([(${lat})],[(${lon})]);
+         var latlng = L.latLng([(${lat})],[(${lon})]);
+   
+       var popup = L.popup()
+	     .setLatLng(latlng)
+	     .setContent([[${event.name}]])
+	     .openOn(map);
+ 
 	</script>
   </div>
   </div>
