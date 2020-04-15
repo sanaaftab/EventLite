@@ -210,6 +210,36 @@ public class VenuesController {
 		}		
 		else venue.setCapacity(venueToBeUpdated.getCapacity());
 		
+		MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+				.accessToken(MAPBOX_ACCESS_TOKEN)
+				.query(venue.getPostcode() + " " + venue.getRoadname())
+				.build();
+
+			mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+			@Override
+			public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+		
+				List<CarmenFeature> results = response.body().features();
+	
+				if (results.size() > 0) {
+				  Point firstResultPoint = results.get(0).center();
+				  venue.setLatitude(firstResultPoint.latitude());
+				  venue.setLongitude(firstResultPoint.longitude());
+				}
+			}
+		
+			@Override
+			public void onFailure(Call<GeocodingResponse> call, Throwable throwable) {
+				throwable.printStackTrace();
+			}
+		});
+		
+		try {
+			Thread.sleep(1000L);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
         venueService.save(venue);
 
         return "redirect:/venues";
