@@ -65,7 +65,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public List<Event> find3MostRecent(LocalDate date) {
 
-		return eventRepository.findTop3ByDateAfterOrderByDateAsc(date);
+		return eventRepository.findTop3ByDateAfterOrderByDateAscTimeAscNameAsc(date);
 	}
 
 }

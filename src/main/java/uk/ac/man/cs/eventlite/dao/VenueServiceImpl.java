@@ -56,7 +56,7 @@ public class VenueServiceImpl implements VenueService{
     
 	@Override
 	public List<Venue> findTop3MostPopularVenues(){
-		return venueRepository.findTop3ByOrderByNumberOfEventsDesc();
+		return venueRepository.findTop3ByOrderByNumberOfEventsDescNameAsc();
 	}
 
 }

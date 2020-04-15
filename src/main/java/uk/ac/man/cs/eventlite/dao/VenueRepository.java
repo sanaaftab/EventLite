@@ -11,5 +11,5 @@ public interface VenueRepository extends JpaRepository<Venue, Long>{
 	//Venue findById(long id);
 	public Iterable<Venue> findAllByNameContainingIgnoreCaseOrderByNameAsc(String searchQuery);
 	
-	public List<Venue> findTop3ByOrderByNumberOfEventsDesc();
+	public List<Venue> findTop3ByOrderByNumberOfEventsDescNameAsc();
 }

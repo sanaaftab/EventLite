@@ -112,6 +112,7 @@ public class EventsController {
 
 		}
 		
+		event.getVenue().setNumberOfEvents(event.getVenue().getNumberOfEvents() + 1);
 		eventService.save(event);
 		redirectAttrs.addFlashAttribute("ok_message", "New event added.");
 
@@ -194,11 +195,16 @@ public class EventsController {
 			else event.setTime(eventToBeUpdated.getTime());
 			
 			if(event.getVenue()!=null) {
+				eventToBeUpdated.getVenue().setNumberOfEvents(eventToBeUpdated.getVenue().getNumberOfEvents() - 1);
 				eventToBeUpdated.setVenue(event.getVenue());
-			}				
+				eventToBeUpdated.getVenue().setNumberOfEvents(eventToBeUpdated.getVenue().getNumberOfEvents() + 1);
+			}	
 			else event.setVenue(eventToBeUpdated.getVenue());
+			
 
 	        eventService.save(event);
+	        
+	        
 
 	        return "redirect:/events";
 	    }
