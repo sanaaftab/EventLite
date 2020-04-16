@@ -12,7 +12,6 @@
   
   <div class="map">
 	<style>
-	
 	#map{width: 500px;
 	border-style: outset;
   height: 300px;
@@ -83,12 +82,13 @@
         
         displayMarker([(${lat})],[(${lon})]);
          var latlng = L.latLng([(${lat})],[(${lon})]);
-   
-       var popup = L.popup()
-	     .setLatLng(latlng)
-	     .setContent([[${event.name}]])
-	     .openOn(map);
- 
+         
+     map.on('click', function() {
+      	 new L.popup({ closeOnClick: false })
+	    	 .setLatLng(latlng)
+	    	 .setContent([[${event.name}]])
+	     	 .openOn(map);
+     });
 	</script>
   </div>
   </div>
