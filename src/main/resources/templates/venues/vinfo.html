@@ -5,7 +5,8 @@
   <title th:text="${venue.name}"></title>
 </head>
 <body>
-  <div layout:fragment="content">
+ <div layout:fragment="content">
+
     <h1 th:text="${venue.name}"></h1>
 
   <table style="width:40%">
@@ -36,6 +37,16 @@
  <input type="hidden" name="_method" value="delete" />
         <td> <button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete</a></td>
         </form>
+        
+         <div>
+  <button class="btn btn-primary" onclick="goBack()"><i class="fas fa-hand-point-left" aria-hidden="true" ></i>  Go Back</button>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+  </div>	
         
 
      
