@@ -1,5 +1,6 @@
 package uk.ac.man.cs.eventlite.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -142,4 +143,18 @@ public class Venue{
 		this.longitude = longtitude;
 	}
 	
+	public String displayUpcomingEvents()
+	{
+		int counter = 0;
+		String futureEvents = "";
+		for(Event event : this.getEvents()){
+			   if(event.IsitAfter() && counter == 0)
+				   {
+				      futureEvents = event.getName();
+				      counter = 1;
+				   }
+			   else futureEvents = futureEvents+ " & " +event.getName();
+			}
+		return futureEvents;
+	}
 }

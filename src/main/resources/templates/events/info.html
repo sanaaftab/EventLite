@@ -67,28 +67,18 @@
             .setView([53.484, -2.244], 10)
             .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
 
-        function displayMarker(latitude, longitude){
+        
             var myIcon = L.mapbox.marker.icon({
             'marker-color': '#3bb2d0',
             'marker-size': 'large',
             'marker-symbol': 'rocket'
             
             });  
-       
-            // L.marker is a low-level marker constructor in Leaflet.
-            L.marker([latitude, longitude], { icon: myIcon }).addTo(map);
-        }
+
+        var latlng = L.latLng([(${lat})],[(${lon})]); 
+        var marker = L.marker( latlng, { icon: myIcon }).addTo(map);
+        marker.bindPopup([[${event.name}]]).openPopup();
         
-        
-        displayMarker([(${lat})],[(${lon})]);
-         var latlng = L.latLng([(${lat})],[(${lon})]);
-         
-     map.on('click', function() {
-      	 new L.popup({ closeOnClick: false })
-	    	 .setLatLng(latlng)
-	    	 .setContent([[${event.name}]])
-	     	 .openOn(map);
-     });
 	</script>
   </div>
   </div>
