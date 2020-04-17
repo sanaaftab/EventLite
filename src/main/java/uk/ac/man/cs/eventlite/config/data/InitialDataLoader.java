@@ -22,7 +22,7 @@ import uk.ac.man.cs.eventlite.entities.Venue;;
 @Profile({ "default", "test" })
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-	public final static Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
+	private final static Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
 
 	@Autowired
 	private EventServiceImpl eventService;
@@ -57,6 +57,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		venue2.setLongitude(-2.218);
 		venueService.save(venue2);
 		
+		Venue venue3 = new Venue();
+		venue3.setCapacity(1000);
+		venue3.setName("Picadilly Circus");
+		venue3.setRoadname("Picadilly Circus London");
+		venue3.setPostcode("W1J 9HS");
+		venue3.setLatitude(51.510067);
+		venue3.setLongitude(-0.133869);
+		venueService.save(venue3);
+		
 		Event event1 = new Event();
 		event1.setDate(LocalDate.of(2021, 02, 25));
 		event1.setTime(LocalTime.of(18, 00));
@@ -71,6 +80,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event2.setName("Event 2");
 		event2.setVenue(venue2);
 		eventService.save(event2);
+		
+		Event event3 = new Event();
+		event3.setDate(LocalDate.of(2021, 02, 20));
+		event3.setTime(LocalTime.of(17, 00));
+		event3.setName("Event 3");
+		event3.setDescription("Fabulous event");
+		event3.setVenue(venue3);
+		eventService.save(event3);
 
 	}
 

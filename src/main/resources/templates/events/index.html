@@ -45,12 +45,35 @@
     </table>
     
     <div id="map">
+    
+
+    
 	<script type="text/javascript" th:inline="javascript">
+		
+	  var avgLat = 0;
+	  var avgLon = 0;
+	  var countEvents = 0;	
+	  var boundsBox = [];
+
+	  /*<![CDATA[*/
+      /*[# th:each="e : ${events}"]*/
+          if(/*[(${e.IsitAfter()})]*/)
+          {
+          	var lat = /*[(${e.venue.latitude})]*/;
+          	var lon = /*[(${e.venue.longitude})]*/;
+          	countEvents+=1;
+          	avgLat += lat;
+          	avgLon += lon;
+            boundsBox.push([lat, lon]);
+          }
+      /*[/]*/
+      /*]]>*/
+      
 		 L.mapbox.accessToken = 'pk.eyJ1IjoiaWxpbmNhaW9uIiwiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ';
         var map = L.mapbox.map('map')
-            .setView([53.484, -2.244], 12)
+            .setView([avgLat/countEvents, avgLon/countEvents], 10)
             .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
-
+		map.fitBounds(boundsBox);
      
             var myIcon = L.mapbox.marker.icon({
             'marker-color': '#3bb2d0',
