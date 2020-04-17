@@ -11,6 +11,13 @@
     <div class="alert alert-danger" role="alert" th:if="${message}"
       th:text="${message}">
     </div>
+    
+    <form action="#" th:action="@{/venues}" th:object="${searchqueryKeyVenues}" method="get">
+	    <label><b>Search for venues:</b></label>
+		<input type="text" th:field="*{searchString}" placeholder="Search.." name="search" required>
+	    <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -38,11 +45,7 @@
       <a class="btn btn-primary" role="button" href="/venues/new"><i class="fas fa-plus" aria-hidden="true"></i> Add a new venue</a>
     </p>
   
-  <form action="#" th:action="@{/venues}" th:object="${searchqueryKeyVenues}" method="get">
-    <label><b>Search for venues:</b></label>
-	<input type="text" th:field="*{searchString}" placeholder="Search.." name="search" required>
-    <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
+
  </div>
 </body>
 </html>

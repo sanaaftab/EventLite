@@ -15,24 +15,33 @@
     
     <form th:action="@{/events/new}" th:object="${event}" method="post">
       
-        <label><b>Event Name</b></label>
-	    <input type="text" placeholder="Enter Event Name" name="name" required/>
-	
-	    <label><b>Venue</b></label>
-	    <select name="venue" required>
-	        <option value="">Select Venue</option>
-		    <option th:each="v : ${venues}" th:value="${v.id}" th:text="${v.name}">Venue</option>
-		</select> 
-
-		<label><b>Date:</b></label>
-		<input type="date"  name="date" required>
+      	<div class="form-group">
+	        <label><b>Event Name</b></label>
+		    <input class="form-control" type="text" placeholder="Enter Event Name" name="name" required/>
+	    </div>
+	    
+		<div class="form-group">
+		    <label><b>Venue</b></label>
+		    <select class="form-control" name="venue" required>
+		        <option value="">Select Venue</option>
+			    <option th:each="v : ${venues}" th:value="${v.id}" th:text="${v.name}">Venue</option>
+			</select> 
+		</div>
 		
-		<label><b>Time:</b></label>
-		<input type="time" name="time">
+		<div class="form-group">
+			<label><b>Date:</b></label>
+			<input class="form-control" type="date"  name="date" required>
+		</div>
 		
-		<label><b>Description</b></label>
-	    <input type="text" placeholder="Enter Event Description" name="description">
+		<div class="form-group">
+			<label><b>Time:</b></label>
+			<input class="form-control" type="time" name="time">
+		</div>
 		
+		<div class="form-group">
+			<label><b>Description</b></label>
+		    <input class="form-control" type="text" placeholder="Enter Event Description" name="description">
+		</div>
       
       <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
       <a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>

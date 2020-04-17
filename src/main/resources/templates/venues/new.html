@@ -15,18 +15,25 @@
     
     <form th:action="@{/venues/new}" th:object="${venue}" method="post">
       
-        <label><b>Venue Name:</b></label>
-	    <input type="text" name="name" required/>
-
-		<label><b>Capacity:</b></label>
-		<input type="number"  name="capacity" required/>
+      	<div class="form-group">
+        	<label><b>Venue Name:</b></label>
+	    	<input class="form-control" type="text" name="name" placeholder="Enter Venue Name" required/>
+		</div>
 		
-		<label><b>Road Name:</b></label>
-		<input type="text" name="roadname" required/>
+		<div class="form-group">
+			<label><b>Capacity:</b></label>
+			<input class="form-control" type="number"  name="capacity" placeholder="Enter Total Capacity" required/>
+		</div>
 		
-		<label><b>Postcode:</b></label>
-	    <input type="text" name="postcode" required/>
+		<div class="form-group">
+			<label><b>Road Name:</b></label>
+			<input class="form-control" type="text" name="roadname" placeholder="Enter Road Name" required/>
+		</div>
 		
+		<div class="form-group">
+			<label><b>Postcode:</b></label>
+	    	<input class="form-control" type="text" name="postcode" placeholder="Enter Postcode" required/>
+		</div>
       
       <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Save</button>
       <a class="btn btn-warning" role="button" href="/venues"><i class="fas fa-ban" aria-hidden="true"></i> Cancel</a>
