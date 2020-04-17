@@ -62,9 +62,11 @@
        <div>
         <div id="map">
 	<script th:inline="javascript">
+	   
+	   var latlng = L.latLng([(${lat})],[(${lon})]); 
 		 L.mapbox.accessToken = 'pk.eyJ1IjoiaWxpbmNhaW9uIiwiYSI6ImNrOHk2Ym04cDB0cjgzaG1pc25uNzF1aTkifQ.7t7_eaFGSaNWVSUpBmWxAQ';
         var map = L.mapbox.map('map')
-            .setView([53.484, -2.244], 10)
+            .setView(latlng, 14)
             .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
 
         
@@ -75,7 +77,6 @@
             
             });  
 
-        var latlng = L.latLng([(${lat})],[(${lon})]); 
         var marker = L.marker( latlng, { icon: myIcon }).addTo(map);
         marker.bindPopup([[${event.name}]]).openPopup();
         
