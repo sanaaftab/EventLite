@@ -6,10 +6,14 @@ import java.time.LocalTime;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import java.time.format.DateTimeFormatter;  
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import uk.ac.man.cs.eventlite.twitter.EventLiteTwitter;
 
 @Entity
 @Table(name="events") 
@@ -39,6 +43,8 @@ public class Event {
 	@NotNull
 	@ManyToOne
 	private Venue venue;
+	
+	private EventLiteTwitter eventLiteTwitter;
 
 	public Event() {
 	}
@@ -89,6 +95,13 @@ public class Event {
 
 	public void setVenue(Venue venue) {
 		this.venue = venue;
+	}
+	
+	public EventLiteTwitter getTwitter(){
+		return eventLiteTwitter;
+	}
+	public void setTwitter(EventLiteTwitter twitter) {
+		this.eventLiteTwitter = twitter;
 	}
 	
 	public boolean IsitAfter() 
