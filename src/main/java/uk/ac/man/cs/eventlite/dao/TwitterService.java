@@ -43,10 +43,12 @@ public class TwitterService {
 	    return status.getText();
 	}
 	
-	public List<String> getTimeLine() throws TwitterException {
+	public List<Status> getTimeLine() throws TwitterException {
 	     
 	    return this.twitter.getHomeTimeline().stream()
-	      .map(item -> item.getText())
 	      .collect(Collectors.toList());
 	}
+	
+	
+	
 }

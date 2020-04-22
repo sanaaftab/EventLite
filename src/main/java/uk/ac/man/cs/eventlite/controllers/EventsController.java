@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import twitter4j.Status;
 import twitter4j.TwitterException;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
@@ -69,14 +70,14 @@ public class EventsController {
 		model.addAttribute("events", eventList);
 		
 		try{
-			List<String> timeLine = twitterService.getTimeLine();
-			if(timeLine.size()>=5)
-			  model.addAttribute("twitterTimeline",timeLine.subList(0, 5));
+			List<Status> statusList = twitterService.getTimeLine();
+			if(statusList.size()>=5)
+			  model.addAttribute("statusList",statusList.subList(0, 5));
 			else
-			  model.addAttribute("twitterTimeline",timeLine);
+			  model.addAttribute("statusList",statusList);
 		}
 		catch(TwitterException e) {
-			model.addAttribute("twitterTimeline", new ArrayList<String>());
+			model.addAttribute("twitterTimeline", new ArrayList<Status>());
 			e.printStackTrace();
 		}
 
