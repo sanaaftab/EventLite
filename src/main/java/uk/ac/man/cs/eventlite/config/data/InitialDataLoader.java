@@ -1,7 +1,6 @@
 package uk.ac.man.cs.eventlite.config.data;
 
 import java.time.LocalDate;
-import uk.ac.man.cs.eventlite.twitter.EventLiteTwitter;
 import java.time.LocalTime;
 
 import org.slf4j.Logger;
@@ -76,14 +75,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event1.setName("Event 1");
 		event1.setDescription("Fabulous event");
 		event1.setVenue(venue1);
-		EventLiteTwitter eventLiteTwitter1 = new EventLiteTwitter();
-		try {
-		eventLiteTwitter1.createTweet("Hi, this is the first tweet for event1");
-		}
-		catch(TwitterException e) {
-			log.info("Something went wrong when creating a tweet in InitialDataLoader");
-		}
-		event1.setTwitter(eventLiteTwitter1);
 		eventService.save(event1);
 		
 		Event event2 = new Event();
@@ -91,14 +82,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event2.setTime(LocalTime.of(19, 00));
 		event2.setName("Event 2");
 		event2.setVenue(venue2);
-		EventLiteTwitter eventLiteTwitter2 = new EventLiteTwitter();
-		try {
-		eventLiteTwitter2.createTweet("Hey there, this is the first tweet for event2");
-		}
-		catch(TwitterException e) {
-			log.info("Something went wrong when creating a tweet in InitialDataLoader");
-		}
-		event2.setTwitter(eventLiteTwitter2);
 		eventService.save(event2);
 		
 		Event event3 = new Event();
@@ -107,14 +90,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event3.setName("Event 3");
 		event3.setDescription("Fabulous event");
 		event3.setVenue(venue3);
-		EventLiteTwitter eventLiteTwitter3 = new EventLiteTwitter();
-		try {
-		eventLiteTwitter3.createTweet("Hola, this is the first tweet for event3");
-		}
-		catch(TwitterException e) {
-			log.info("Something went wrong when creating a tweet in InitialDataLoader");
-		}
-		event3.setTwitter(eventLiteTwitter3);
 		eventService.save(event3);
 		
 		

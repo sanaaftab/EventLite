@@ -26,15 +26,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.search.SearchQuery;
-import uk.ac.man.cs.eventlite.twitter.EventLiteTwitter;
+
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
 public class EventsController {

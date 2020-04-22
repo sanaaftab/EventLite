@@ -1,18 +1,20 @@
-package uk.ac.man.cs.eventlite.twitter;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
+package uk.ac.man.cs.eventlite.dao;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import twitter4j.Status;
-public class EventLiteTwitter {
-	
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.Twitter;
+
+public class TwitterService {
+
 	private Twitter twitter;
 	
-	public EventLiteTwitter() {
+	public TwitterService() {
 		String consumerKey = "Y24OPYtAsp5yFL7z68lQZ1yXn";
 		String consumerSecretKey = "mtKkHRWM3T0iZscSV7XDGuGrjm39DvecVIZGDwwmHhJPum2Srw";
 		String accessToken = "1249734082323533826-Eon4lzUymi14xoqQQbRpefRVvT5YuD";
@@ -47,5 +49,4 @@ public class EventLiteTwitter {
 	      .map(item -> item.getText())
 	      .collect(Collectors.toList());
 	}
-
 }
