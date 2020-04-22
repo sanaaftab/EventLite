@@ -38,7 +38,7 @@ public class TwitterService {
 	}
 	
 	public String createTweet(String tweet) throws TwitterException {
-
+		
 	    Status status = this.twitter.updateStatus(tweet);
 	    return status.getText();
 	}

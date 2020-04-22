@@ -53,6 +53,16 @@
 </table> 
 
 <div>
+  <form th:action="@{/events/{num}(num=${event.id})}" th:method="get">
+    <input type="text" name="tweetInput" th:placeholder= "${event.name}" />
+    <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Send Tweet</button>
+  </form>
+</div>
+
+<td>
+     <span style="color:green; background-color: #98FB98" th:if="${alert != null and showAlert}" th:text="${alert}"</th></span>
+</td>   
+
 <form th:action="@{/events/{num}(num=${event.id})}" th:method="delete">
 		  <input type="hidden" name="_method" value="delete">
  <input type="hidden" name="_method" value="delete" />

@@ -53,7 +53,7 @@
       
       <tbody>
       	<tr th:each="tweet : ${twitterTimeline}">
-      	  <td>th:text = "lalalal" </td>
+      	  <td th:text="${{tweet}}"> </td>
       	</tr>
       </tbody>
     </table>
