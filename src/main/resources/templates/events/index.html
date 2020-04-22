@@ -48,12 +48,14 @@
       <thead>
         <tr>
           <th><i class="fab fa-twitter"></i> Latest tweets </th>
+          <th><i class="fas fa-calendar"></i> Date </th>
         </tr>
       </thead>
       
       <tbody>
-      	<tr th:each="tweet : ${twitterTimeline}">
-      	  <td th:text="${{tweet}}"> </td>
+      	<tr th:each="status : ${statusList}">
+      	  <td><a th:href="${'https://twitter.com/' + status.getUser().getScreenName() + '/status/' + status.getId()}" th:text ="${status.getText()}"</a></td>
+      	  <td th:text="${status.getCreatedAt()}"></td>
       	</tr>
       </tbody>
     </table>
