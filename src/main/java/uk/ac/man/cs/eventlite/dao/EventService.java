@@ -24,4 +24,6 @@ public interface EventService {
     
     public List<Event> find3MostRecent(LocalDate date);
 
+	public Iterable<Event> findNext3ForVenue(long id);
+
 }

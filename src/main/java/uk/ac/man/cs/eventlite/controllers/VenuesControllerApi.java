@@ -48,12 +48,15 @@ public class VenuesControllerApi {
 
 		return venueToResource(venueService.findOne(id));
 	}
+	
+	@RequestMapping(value = "/{id}/next3events", method = RequestMethod.GET)
+	public Resources<Resource<Event>> getNext3Events(@PathVariable(value = "id") long id) {
+		return eventsToResource(eventService.findNext3ForVenue(id), id);
+	}
 
 	private Resource<Venue> venueToResource(Venue venue) {
 		Link selfLink = linkTo(VenuesControllerApi.class).slash(venue.getId()).withSelfRel();
 		Link venuesLink = linkTo(VenuesControllerApi.class).slash(venue.getId()).withRel("venue");
-		//to DO implement the next3events and events links so that the links will go somewhere and give  a result
-		//see the profile one for an example. A new page will be needed probably I am not sure.
 		Link eventsLink = linkTo(VenuesControllerApi.class).slash(venue.getId()).slash("events").withRel("events");
 		Link next3Link = linkTo(VenuesControllerApi.class).slash(venue.getId()).slash("next3events").withRel("next3events");
 		return new Resource<Venue>(venue, selfLink, venuesLink, eventsLink, next3Link);
@@ -68,8 +71,27 @@ public class VenuesControllerApi {
 			resources.add(venueToResource(venue));
 		}
 
-		return new Resources<Resource<Venue>>(resources, selfLink , venuesLink);
+		return new Resources<Resource<Venue>>(resources, selfLink, venuesLink);
 	}
+	
+	private Resource<Event> eventToResource(Event event) {
+		Link selfLink = linkTo(EventsControllerApi.class).slash(event.getId()).withSelfRel();
+		Link venueLink = linkTo(EventsControllerApi.class).slash(event.getId()).slash("venue").withRel("venue");
+		Link eventLink = linkTo(EventsControllerApi.class).slash(event.getId()).withRel("event");
+		return new Resource<Event>(event, selfLink, eventLink,  venueLink);
+	}
+	
+	private Resources<Resource<Event>> eventsToResource(Iterable<Event> events, long id) {
+		Link selfLink = linkTo(methodOn(EventsControllerApi.class).getAllEvents()).withSelfRel();
+		List<Resource<Event>> resources = new ArrayList<Resource<Event>>();
+		for (Event event : events) {
+			resources.add(eventToResource(event));
+		}
+
+		return new Resources<Resource<Event>>(resources, selfLink);
+	}
+
+
 	
 	//used for deleting a venue 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
