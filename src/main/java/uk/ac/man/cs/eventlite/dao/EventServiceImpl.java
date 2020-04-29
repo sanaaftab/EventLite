@@ -75,6 +75,15 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.findTop3ByDateAfterOrderByDateAscTimeAscNameAsc(date);
 	}
 	
+	@Override
+	public Iterable<Event> findAllEventsAtVenue(long id) {
+	
+		Venue venue = venueRepository.findById(id).get();
+		Set<Event> eventsAtVenue = venue.getEvents();
+
+		return eventsAtVenue;
+	}
+	
 	
 	@Override
 	public Iterable<Event> findNext3ForVenue(long id) {

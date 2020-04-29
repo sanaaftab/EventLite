@@ -53,6 +53,12 @@ public class VenuesControllerApi {
 	public Resources<Resource<Event>> getNext3Events(@PathVariable(value = "id") long id) {
 		return eventsToResource(eventService.findNext3ForVenue(id), id);
 	}
+	
+	@RequestMapping(value = "/{id}/events", method = RequestMethod.GET)
+	public Resources<Resource<Event>> getAllEventsAtVenue(@PathVariable(value = "id") long id) {
+		return eventsToResource(eventService.findAllEventsAtVenue(id), id);
+	}
+
 
 	private Resource<Venue> venueToResource(Venue venue) {
 		Link selfLink = linkTo(VenuesControllerApi.class).slash(venue.getId()).withSelfRel();
