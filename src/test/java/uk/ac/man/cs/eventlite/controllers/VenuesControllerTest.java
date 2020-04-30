@@ -3,6 +3,7 @@ package uk.ac.man.cs.eventlite.controllers;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -13,9 +14,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import javax.servlet.Filter;
 
@@ -101,11 +104,12 @@ public class VenuesControllerTest {
 		verifyZeroInteractions(venue);
 	}
 	
+	@Test
 	@WithMockUser(username="admin", roles= {"ADMINISTRATOR"})
 	public void testUpdateVenue() throws Exception
     {
 		Venue v = mock(Venue.class);
-        when(venueService.findById(0).get()).thenReturn(v);
+        when(venueService.findById(0)).thenReturn(Optional.ofNullable(v));
 
         mvc.perform(post("/venues/update/0").with(csrf()).accept(MediaType.TEXT_HTML).contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         		 .param("name", "event")
@@ -113,8 +117,10 @@ public class VenuesControllerTest {
                  .param("roadname", "LastRoad")
                  .sessionAttr("event", event)
                  .param("postcode", "M144AL"))
-                .andExpect(status().isCreated())
-                .andExpect(handler().methodName("updateVenue"));
+                .andExpect(status().isFound())
+                .andExpect(handler().methodName("update"))
+                .andExpect(redirectedUrl("/venues"));
+        verify(venueService).save(any());
     }
 	
 	@Test
