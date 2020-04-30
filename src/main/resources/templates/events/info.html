@@ -23,6 +23,7 @@
   </div>
   
     <h1 th:text="${event.name}"></h1>
+    
 
   <table style="width:40%">
   <tr>
@@ -83,6 +84,17 @@
 	</script>
   </div>
   </div>
+  
+  <div>
+	  <form th:action="@{/events/{num}(num=${event.id})}" th:method="get">
+	    <input type="text" name="tweetInput" th:placeholder= "${event.name}" />
+	    <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i> Send Tweet</button>
+	  </form>
+	</div>
+ 
+	<div class="alert alert-success" role="alert" th:if="${alert != null and showAlert}" th:text="${alert}">
+    </div>
+	
   
   <div>
   <button class="btn btn-primary" onclick="goBack()"><i class="fas fa-hand-point-left" aria-hidden="true"></i> Go Back</button>

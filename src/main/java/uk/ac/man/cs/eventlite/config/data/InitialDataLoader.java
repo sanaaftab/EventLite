@@ -10,6 +10,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+
+import twitter4j.TwitterException;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.dao.EventRepository;
@@ -66,6 +68,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		venue3.setLongitude(-0.133869);
 		venueService.save(venue3);
 		
+		
 		Event event1 = new Event();
 		event1.setDate(LocalDate.of(2021, 02, 25));
 		event1.setTime(LocalTime.of(18, 00));
@@ -88,7 +91,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event3.setDescription("Fabulous event");
 		event3.setVenue(venue3);
 		eventService.save(event3);
-
+		
+		
+		
 	}
 
 }

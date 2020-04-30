@@ -3,12 +3,15 @@ package uk.ac.man.cs.eventlite.controllers;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -26,11 +29,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import twitter4j.Status;
+import twitter4j.TwitterException;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
+import uk.ac.man.cs.eventlite.config.data.InitialDataLoader;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
+import uk.ac.man.cs.eventlite.dao.TwitterService;
 import uk.ac.man.cs.eventlite.search.SearchQuery;
+
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
 public class EventsController {
@@ -40,6 +48,10 @@ public class EventsController {
 	
 	@Autowired
 	private VenueService venueService;
+	
+	private static TwitterService twitterService = new TwitterService();
+	
+	private final static Logger log = LoggerFactory.getLogger(EventsController.class);
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAllEvents(Model model, @ModelAttribute SearchQuery searchQuery) {
@@ -56,6 +68,19 @@ public class EventsController {
 			eventList = eventService.findAllByName(searchQuery.getSearchString());
 		
 		model.addAttribute("events", eventList);
+		
+		try{
+			List<Status> statusList = twitterService.getTimeLine();
+			if(statusList.size()>=5)
+			  model.addAttribute("statusList",statusList.subList(0, 5));
+			else
+			  model.addAttribute("statusList",statusList);
+		}
+		catch(TwitterException e) {
+			model.addAttribute("twitterTimeline", new ArrayList<Status>());
+			e.printStackTrace();
+		}
+
 		return "events/index";
 		
 	}
@@ -73,8 +98,24 @@ public class EventsController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String DetailedEvent(@PathVariable("id") long id, Model model){
+	public String DetailedEvent(@PathVariable("id") long id, Model model,
+								@RequestParam(name="tweetInput", required=false) String tweet){
 
+		if(tweet!=null && tweet!="") {
+			try {
+				String status =twitterService.createTweet(tweet);
+				model.addAttribute("showAlert", true);
+				if(status.equals(tweet))
+					model.addAttribute("alert", "Your tweet: "+tweet+" has been posted.");
+				else
+					model.addAttribute("alert", null);
+			}
+			catch(TwitterException e) {
+				//ignore error
+				e.printStackTrace();
+			}
+		}
+		
 		Event event = eventService.findOne(id);
 		model.addAttribute("event", event);
 		model.addAttribute("venue", event.getVenue());
@@ -202,11 +243,11 @@ public class EventsController {
 			else event.setVenue(eventToBeUpdated.getVenue());
 			
 
-	        eventService.save(event);
-	        
+	        eventService.save(event);   
 	        
 
 	        return "redirect:/events";
 	    }
+		
 
 }
