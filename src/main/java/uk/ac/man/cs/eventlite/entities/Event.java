@@ -6,10 +6,12 @@ import java.time.LocalTime;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import java.time.format.DateTimeFormatter;  
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 @Table(name="events") 
@@ -90,6 +92,7 @@ public class Event {
 	public void setVenue(Venue venue) {
 		this.venue = venue;
 	}
+	
 	
 	public boolean IsitAfter() 
 	{
