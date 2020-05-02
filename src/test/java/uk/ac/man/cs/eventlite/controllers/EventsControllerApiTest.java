@@ -4,8 +4,12 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
@@ -44,6 +49,7 @@ import uk.ac.man.cs.eventlite.entities.Venue;
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("test")
+@WithMockUser(username="admin", roles={"ADMINISTRATOR"})
 public class EventsControllerApiTest {
 
 	private MockMvc mvc;
@@ -93,4 +99,18 @@ public class EventsControllerApiTest {
 
 		verify(eventService).findAll();
 	}
+	
+	@Test
+	public void testDeletebyID() throws Exception {
+		Event e = new Event();
+		when(eventService.findOne(0)).thenReturn(e);
+		
+		mvc.perform(delete("/api/events/0").with(csrf()))
+			.andExpect(status().isNoContent())
+			.andExpect(handler().methodName("delEvent"));
+		
+		verify(eventService).deleteById(0);
+	}
+	
+	
 }
