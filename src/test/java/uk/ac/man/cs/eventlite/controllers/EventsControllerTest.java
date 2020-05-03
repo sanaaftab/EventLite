@@ -91,14 +91,16 @@ public class EventsControllerTest {
 		verify(eventService).findAll();
 		verifyZeroInteractions(event);
 	}
-
+	
 	@Test
 	public void getIndexWithEvents() throws Exception {
 		when(eventService.findAll()).thenReturn(Collections.<Event> singletonList(event));
 		when(venueService.findAll()).thenReturn(Collections.<Venue> singletonList(venue));
 
+		
 		mvc.perform(get("/events").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
-				.andExpect(view().name("events/index")).andExpect(handler().methodName("getAllEvents"));
+		.andExpect(view().name("events/index")).andExpect(handler().methodName("getAllEvents"
+				+ ""));
 
 		verify(eventService).findAll();
 		verifyZeroInteractions(event);
@@ -152,5 +154,30 @@ public class EventsControllerTest {
                 .andExpect(status().isFound())
                 .andExpect(handler().methodName("deletebyID"))
                 .andExpect(view().name("redirect:/events"));
+    }
+	
+	@Test
+	@WithMockUser(username="admin", roles= {"ADMINISTRATOR"})
+	public void testNewEvent() throws Exception
+    {
+		Event e = mock(Event.class);
+		e.setName("Event");
+        when(eventService.findOne(0)).thenReturn(e);
+
+        mvc.perform(get("/events/new").with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(handler().methodName("newEvent"));
+    }
+	
+	@WithMockUser(username="admin", roles= {"ADMINISTRATOR"})
+	public void testDetailedEvent() throws Exception
+    {
+		Event e = mock(Event.class);
+		e.setName("Event");
+        when(eventService.findOne(0)).thenReturn(e);
+
+        mvc.perform(get("/events/0").with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(handler().methodName("DetailedEvent"));
     }
 }

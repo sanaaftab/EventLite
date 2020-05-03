@@ -18,6 +18,7 @@ import static uk.ac.man.cs.eventlite.testutil.MessageConverterUtil.getMessageCon
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.servlet.Filter;
@@ -41,6 +42,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import uk.ac.man.cs.eventlite.EventLite;
+import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
@@ -60,7 +62,13 @@ public class VenuesControllerApiTest {
 
 	@Mock
 	private VenueService venueService;
-
+	
+	@Mock
+	private EventService eventService;
+	
+	@InjectMocks
+	private EventsControllerApi eventsController;
+	
 	@InjectMocks
 	private VenuesControllerApi venuesController;
 
@@ -105,6 +113,46 @@ public class VenuesControllerApiTest {
 			.andExpect(handler().methodName("delVenue"));
 		
 		verify(venueService).deleteById(0);
+	}
+	
+	@Test
+	public void testGetNext3Events() throws Exception {
+		Venue v = mock(Venue.class);
+		ArrayList<Event> upcoming = new ArrayList<Event>();
+		when(venueService.findOne(0)).thenReturn(v);
+		when(eventService.findNext3ForVenue(0)).thenReturn(upcoming);
+		Event a = new Event();
+		Event b = new Event();
+		Event c = new Event();
+		a.setVenue(v);
+		b.setVenue(v);
+		c.setVenue(v);
+		upcoming.add(a);
+		upcoming.add(b);
+		upcoming.add(c);
+		
+		mvc.perform(get("/api/venues/0/next3events").with(csrf()))
+			.andExpect(status().isOk())
+			.andExpect(handler().methodName("getNext3Events"));
+
+	}
+	
+	@Test
+	public void testGetAllEventsAtVenue() throws Exception {
+		Venue v = mock(Venue.class);
+		ArrayList<Event> upcoming = new ArrayList<Event>();
+		when(venueService.findOne(0)).thenReturn(v);
+		when(eventService.findAllEventsAtVenue(0)).thenReturn(upcoming);
+		Event a = new Event();
+
+		a.setVenue(v);
+
+		upcoming.add(a);
+
+		mvc.perform(get("/api/venues/0/events").with(csrf()))
+			.andExpect(status().isOk())
+			.andExpect(handler().methodName("getAllEventsAtVenue"));
+
 	}
 	
 	

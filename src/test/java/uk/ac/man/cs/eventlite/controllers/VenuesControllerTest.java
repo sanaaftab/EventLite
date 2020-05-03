@@ -152,4 +152,30 @@ public class VenuesControllerTest {
                 .andExpect(status().isFound())
                 .andExpect(handler().methodName("deletebyID"));
     }
+	
+	@Test
+	@WithMockUser(username="admin", roles= {"ADMINISTRATOR"})
+	public void testDetailedVenue() throws Exception
+    {
+		Venue v = mock(Venue.class);
+		v.setName("Venue");
+        when(venueService.findOne(0)).thenReturn(v);
+
+        mvc.perform(get("/venues/0").with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(handler().methodName("DetailedVenue"));
+    }
+	
+	@Test
+	@WithMockUser(username="admin", roles= {"ADMINISTRATOR"})
+	public void testNewVenue() throws Exception
+    {
+		Venue v = mock(Venue.class);
+		v.setName("Venue");
+        when(venueService.findOne(0)).thenReturn(v);
+
+        mvc.perform(get("/venues/new").with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(handler().methodName("newVenue"));
+    }
 }
