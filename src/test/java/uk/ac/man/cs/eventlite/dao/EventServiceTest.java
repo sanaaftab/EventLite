@@ -6,9 +6,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.mock;
 import static org.mockito.BDDMockito.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 
 import uk.ac.man.cs.eventlite.EventLite;
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = EventLite.class)
@@ -138,4 +141,49 @@ public class EventServiceTest extends AbstractTransactionalJUnit4SpringContextTe
 		verify(eventService, times(2)).deleteById(id);
 		
 	}
+	
+	@Test
+	public void testFind3MostRecent() throws Exception{
+		
+		eventRepository = mock(EventRepository.class);
+	    eventService = mock(EventService.class);
+		List<Event> data = new ArrayList();
+		Event e = mock(Event.class);
+		
+		LocalDate d = e.getDate();
+		
+		data.add(new Event());
+		data.add(new Event());
+		data.add(new Event());
+		
+		given(eventService.find3MostRecent(d)).willReturn(data);
+		
+		Iterable<Event> expected = eventService.find3MostRecent(d);
+		Iterable<Event> datas = data;
+		
+		assertThat(expected, equalTo(datas));
+		
+	}
+	
+	@Test
+	public void testFindAllEventsAtVenue() throws Exception{
+		
+		eventRepository = mock(EventRepository.class);
+	    eventService = mock(EventService.class);
+		Venue venue = mock(Venue.class);
+	    
+		Set<Event> eventsAtVenue = venue.getEvents();
+ 		
+		final long id = 1L;
+		
+		given(eventService.findAllEventsAtVenue(id)).willReturn(eventsAtVenue);
+		
+		Iterable<Event> expected = eventService.findAllEventsAtVenue(id);
+		
+		Iterable<Event> first = eventsAtVenue;
+		
+		assertThat(expected, equalTo(first));
+		
+	}
+	
 }
